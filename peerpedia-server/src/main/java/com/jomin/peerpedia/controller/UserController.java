@@ -173,20 +173,20 @@ public class UserController {
     }
 
     @GetMapping(value = "/stats/teach")
-    public ResponseEntity<Map<String,Object>> getTop3TeachSkills() {
+    public ResponseEntity<Map<String,Object>> getTopTeachSkills() {
         Map<String,Object> responseBody = new LinkedHashMap<>();
         responseBody.put("success", true);
-        responseBody.put("message", "Fetched most known skills");
-        responseBody.put("payload", statsService.getTop3TeachSkills());
+        responseBody.put("message", "Fetched top teach skills");
+        responseBody.put("payload", statsService.getTopTeachSkills());
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
     @GetMapping(value = "/stats/learn")
-    public ResponseEntity<Map<String,Object>> getTop3LearnSkills() {
+    public ResponseEntity<Map<String,Object>> getTopLearnSkills() {
         Map<String,Object> responseBody = new LinkedHashMap<>();
         responseBody.put("success", true);
-        responseBody.put("message", "Fetched most saught-after skills");
-        responseBody.put("payload", statsService.getTop3LearnSkills());
+        responseBody.put("message", "Fetched top learn skills");
+        responseBody.put("payload", statsService.getTopLearnSkills());
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 }

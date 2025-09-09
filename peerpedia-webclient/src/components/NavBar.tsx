@@ -7,7 +7,7 @@ function NavBar() {
     return (
         <div className="fixed bottom-[1vh] sm:bottom-2 left-1/2 transform -translate-x-1/2 w-15/16 sm:w-fit rounded-sm bg-white flex justify-center items-center gap-2 opacity-90 hover:opacity-100 transition">
             <Link to="/" className={anchorStyle}>
-                <img src="info.svg" alt="info" title="Info" height="1vw" width="1vw" className={imgStyle} />
+                <img src="home.svg" alt="info" title="Home" height="1vw" width="1vw" className={imgStyle} />
             </Link>
             <Link to="/teach" className={anchorStyle}>
                 <img src="teach.svg" alt="teach" title="Teach" height="1vw" width="1vw" className={imgStyle} />

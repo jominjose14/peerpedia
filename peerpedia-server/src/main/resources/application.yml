@@ -2,7 +2,7 @@ spring:
   application:
     name: peerpedia
   datasource:
-    url: jdbc:postgresql://${DB_URL}/peerpedia
+    url: jdbc:postgresql://${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
@@ -29,6 +29,10 @@ logging:
 #    org.springframework.web.servlet.DispatcherServlet: DEBUG
 #    org.springframework.web.cors: DEBUG
 
+server:
+  servlet:
+    context-path: /api
+
 app:
   jwt:
     secret: ${JWT_SECRET}
@@ -36,3 +40,5 @@ app:
   frontend-domain: ${FRONTEND_DOMAIN}
   admin:
     password: ${ADMIN_PASSWORD}
+  population:
+    user-include-count: ${USER_INCLUDE_COUNT}

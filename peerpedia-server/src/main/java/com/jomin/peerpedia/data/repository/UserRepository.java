@@ -45,9 +45,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
         ) AS unnested_table
         GROUP BY skill
         ORDER BY freq DESC
-        LIMIT 3
+        LIMIT 5
         """, nativeQuery = true)
-    List<Object[]> findTop3TeachSkills();
+    List<Object[]> findTop5TeachSkills();
 
     @Query(value = """
         SELECT skill, COUNT(*) as freq
@@ -57,7 +57,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
         ) AS unnested_table
         GROUP BY skill
         ORDER BY freq DESC
-        LIMIT 3
+        LIMIT 5
         """, nativeQuery = true)
-    List<Object[]> findTop3LearnSkills();
+    List<Object[]> findTop5LearnSkills();
 }

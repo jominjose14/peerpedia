@@ -1,5 +1,5 @@
 import { API_URL } from "./constants";
-import type { APIResponse, ChatMessage, User } from "./types";
+import type { APIResponse, ChatMessage, PopularSkills, User } from "./types";
 
 const errorResponse: APIResponse = {
     success: false,
@@ -237,7 +237,7 @@ export async function getUserCount(): Promise<number | null> {
     }
 }
 
-export async function getMostKnownSkills(): Promise<string[] | null> {
+export async function getMostKnownSkills(): Promise<PopularSkills | null> {
     try {
         const res = await fetch(`${API_URL}/users/stats/teach`, {
             headers: {
@@ -245,7 +245,7 @@ export async function getMostKnownSkills(): Promise<string[] | null> {
             }
         });
         if (!res.ok) throw new Error("Request failed");
-        const json: { success: boolean, message: string, payload: string[] } = await res.json();
+        const json: { success: boolean, message: string, payload: PopularSkills } = await res.json();
         return json.payload;
     } catch (err) {
         console.error("Failed to get most known skills", err);
@@ -253,7 +253,7 @@ export async function getMostKnownSkills(): Promise<string[] | null> {
     }
 }
 
-export async function getMostSaughtSkills(): Promise<string[] | null> {
+export async function getMostSaughtSkills(): Promise<PopularSkills | null> {
     try {
         const res = await fetch(`${API_URL}/users/stats/learn`, {
             headers: {
@@ -261,7 +261,7 @@ export async function getMostSaughtSkills(): Promise<string[] | null> {
             }
         });
         if (!res.ok) throw new Error("Request failed");
-        const json: { success: boolean, message: string, payload: string[] } = await res.json();
+        const json: { success: boolean, message: string, payload: PopularSkills } = await res.json();
         return json.payload;
     } catch (err) {
         console.error("Failed to get most saught skills", err);

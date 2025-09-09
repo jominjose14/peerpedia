@@ -34,6 +34,9 @@ public class PopulationService {
     private static final String usernamesFile = "usernames.txt";
     private static List<String> skillNames;
 
+    @Value("${app.population.user-include-count}")
+    private int usernamesFileIncludeCount;
+
     @Autowired
     private AuthController authController;
     @Autowired
@@ -106,7 +109,7 @@ public class PopulationService {
     private int populateUsers() {
         try {
             long userCount = userRepository.count();
-            if(1000 <= userCount) {
+            if(usernamesFileIncludeCount <= userCount) {
                 log.info("Users already populated, skipping user population");
                 return 0;
             }
@@ -120,7 +123,11 @@ public class PopulationService {
         var usernamesOptional = readLinesFromResourceFile(usernamesFilePath);
         if(usernamesOptional.isPresent() && skillNames != null && !skillNames.isEmpty()) {
             List<String> usernames = usernamesOptional.get();
+            if(usernamesFileIncludeCount < usernames.size()) {
+                usernames.subList(usernamesFileIncludeCount, usernames.size()).clear();
+            }
             Random random = new Random();
+
             for(String username : usernames) {
                 String cleanUsername = username.split(" ")[0].toLowerCase();
                 List<String> allSkills = new ArrayList<>(skillNames);

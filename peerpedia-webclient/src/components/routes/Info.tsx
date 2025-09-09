@@ -3,12 +3,15 @@ import Fullscreen from "../Fullscreen";
 import NavBar from "../NavBar";
 import Spinner from "../Spinner";
 import { getMostKnownSkills, getMostSaughtSkills, getUserCount } from "../../lib/requests";
+import { CountingNumber } from "../ui/shadcn-io/counting-number";
+import SkillChart from "../SkillChart";
+import type { PlottableSkill, PopularSkills } from "../../lib/types";
 
 function Info() {
     const [loading, setLoading] = useState<boolean>(false);
     const [userCount, setUserCount] = useState<number>(50);
-    const [mostKnownSkills, setMostKnownSkills] = useState<string[]>(["JavaScript", "NodeJS", "HTML"]);
-    const [mostSaughtSkills, setMostSaughtSkills] = useState<string[]>(["SpringBoot", "Golang", "Docker"]);
+    const [mostKnownSkills, setMostKnownSkills] = useState<PlottableSkill[]>([{ skill: "JavaScript", count: 100 }, { skill: "NodeJS", count: 90 }, { skill: "HTML", count: 80 }]);
+    const [mostSaughtSkills, setMostSaughtSkills] = useState<PlottableSkill[]>([{ skill: "SpringBoot", count: 150 }, { skill: "Golang", count: 145 }, { skill: "Docker", count: 130 }]);
 
     useEffect(() => {
         init();
@@ -20,11 +23,23 @@ function Info() {
         const fetchedUserCount: number | null = await getUserCount();
         if (fetchedUserCount) setUserCount(fetchedUserCount);
 
-        const fetchedMostKnownSkills: string[] | null = await getMostKnownSkills();
-        if (fetchedMostKnownSkills) setMostKnownSkills(fetchedMostKnownSkills);
+        const fetchedMostKnownSkills: PopularSkills | null = await getMostKnownSkills();
+        if (fetchedMostKnownSkills) {
+            const plottableSkills: PlottableSkill[] = [];
+            for (const key in fetchedMostKnownSkills) {
+                plottableSkills.push({ skill: key, count: fetchedMostKnownSkills[key] });
+            }
+            setMostKnownSkills(plottableSkills);
+        }
 
-        const fetchedMostSaughtSkills: string[] | null = await getMostSaughtSkills();
-        if (fetchedMostSaughtSkills) setMostSaughtSkills(fetchedMostSaughtSkills);
+        const fetchedMostSaughtSkills: PopularSkills | null = await getMostSaughtSkills();
+        if (fetchedMostSaughtSkills) {
+            const plottableSkills: PlottableSkill[] = [];
+            for (const key in fetchedMostSaughtSkills) {
+                plottableSkills.push({ skill: key, count: fetchedMostSaughtSkills[key] });
+            }
+            setMostSaughtSkills(plottableSkills);
+        }
 
         setLoading(false);
     }
@@ -40,7 +55,7 @@ function Info() {
                 <h2 className="text-blue-500 font-bold">About</h2>
                 <p className="text-justify">Welcome to Peerpedia. Get matched with peers who want to learn from you and teach them in return!</p>
 
-                <h2 className="text-blue-500 font-bold mt-6">Get started</h2>
+                <h2 className="text-blue-500 font-bold mt-8">Get started</h2>
                 <ul className="list-disc list-outside pl-5">
                     <li>Click on Profile tab <img className="inline" src="profile.svg" alt="profile icon" height="20px" width="20px" /> from the bottom nav bar</li>
                     <li>Provide your email and skills. Then,</li>
@@ -49,14 +64,23 @@ function Info() {
                     <li>Click on Learn tab <img className="inline" src="learn.svg" alt="learn icon" height="20px" width="20px" /> to find peers to learn from</li>
                 </ul>
 
-                <h2 className="text-blue-500 font-bold mt-6">Stats</h2>
-                <ul className="list-disc list-outside pl-5">
-                    <li>Peerpedia population: {userCount} peers</li>
-                    <li>Most known skills: {mostKnownSkills.join(", ")}</li>
-                    <li>Most saught-after skills: {mostSaughtSkills.join(", ")}</li>
-                </ul>
+                <h2 className="text-blue-500 font-bold mt-8">Stats</h2>
+                <div className="mt-2">
+                    <div className="">
+                        <CountingNumber number={userCount} inView={true} transition={{ stiffness: 100, damping: 30 }} className="block text-center text-[2.5rem] font-bold bg-gradient-to-r from-blue-950 via-blue-500 to-blue-50 text-transparent bg-clip-text" />
+                        <p className="text-center font-light">Total users on Peerpedia</p>
+                    </div>
+                    <div className="space-y-1 mt-6">
+                        <SkillChart data={mostKnownSkills} />
+                        <p className="text-center font-light">Most known skills</p>
+                    </div>
+                    <div className="space-y-1 mt-4">
+                        <SkillChart data={mostSaughtSkills} />
+                        <p className="text-center font-light">Most saught-after skills</p>
+                    </div>
+                </div>
 
-                <h2 className="text-blue-500 font-bold mt-6">Tech Stack</h2>
+                <h2 className="text-blue-500 font-bold mt-8">Tech Stack</h2>
                 <ul className="list-disc list-outside pl-5">
                     <li>Frontend: TypeScript, Node, React, TailwindCSS, ShadCN, Vite</li>
                     <li>Backend: Java, Spring Boot, JPA, Hibernate, JJWT, Gradle</li>

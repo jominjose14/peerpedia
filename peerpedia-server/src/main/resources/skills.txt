@@ -2,6 +2,7 @@ HTML
 CSS
 TailwindCSS
 JavaScript
+TypeScript
 NodeJS
 React
 Vue

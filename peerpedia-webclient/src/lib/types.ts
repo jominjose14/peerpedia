@@ -19,3 +19,13 @@ export interface APIResponse {
     success: boolean,
     message: string,
 }
+
+export interface PopularSkills {
+    [key: string]: number,
+}
+
+export interface PlottableSkill {
+    skill: string,
+    count: number,
+    fill?: string,
+}
