@@ -1,0 +1,58 @@
+HTML
+CSS
+TailwindCSS
+JavaScript
+NodeJS
+React
+Vue
+Angular
+Svelte
+NextJS
+NuxtJS
+NestJS
+SvelteKit
+Express
+Java
+SpringBoot
+Python
+Django
+Flask
+Tensorflow
+Keras
+PyTorch
+Julia
+R
+Matlab
+Ruby
+Ruby on Rails
+PHP
+Laravel
+Golang
+Git
+Jenkins
+Docker
+Kubernetes
+PostgreSQL
+MySQL
+Oracle Relational DB
+MS SQL
+HBase
+Cassandra
+Kafka
+RabbitMQ
+Nginx
+Redis
+C++
+C#
+ASP.NET
+Unreal Engine
+Unity
+Android
+Swift
+Flutter
+React Native
+Electron
+Win32
+QT
+JavaFX
+Java Swing

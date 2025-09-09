@@ -1,0 +1,85 @@
+import { useEffect, useState } from "react";
+import NavBar from "../NavBar";
+import { getUserById } from "../../lib/requests";
+import type { User } from "../../lib/types";
+import { useSearchParams } from "react-router-dom";
+import LetterImage from "../LetterImage";
+import Badge from "../Badge";
+import Chat from "../Chat";
+import Fullscreen from "../Fullscreen";
+import Spinner from "../Spinner";
+
+function Peer() {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [searchParams] = useSearchParams();
+    const [peer, setPeer] = useState<User>({ id: 0, username: 'loading', email: 'loading', teachSkills: ['loading'], learnSkills: ['loading'], bio: 'loading' });
+
+    const idStr = searchParams.get("id");
+
+    useEffect(() => {
+        init();
+    }, []);
+
+    async function init() {
+        setLoading(true);
+        if (idStr === null) {
+            setLoading(false);
+            return;
+        }
+
+        const id = parseInt(idStr);
+        if (!Number.isInteger(id)) {
+            setLoading(false);
+            return;
+        }
+
+        const peer: User | null = await getUserById(id);
+        if (peer === null) {
+            setLoading(false);
+            return;
+        }
+
+        setPeer(peer);
+        setLoading(false);
+    }
+
+    return (
+        <Fullscreen>
+            <main className="min-h-screen w-full sm:w-13/32 m-auto shadow-[0_0_1.5rem_rgb(0,0,0,0.09)] pt-8 px-6 sm:px-16 pb-24">
+                <header className="flex flex-col gap-2 items-center justify-center">
+                    <LetterImage username={peer.username} variant="large" />
+                    <div>@{peer.username}</div>
+                </header>
+                <section className="space-y-4 mt-6">
+                    {/* <div className="space-y-2 mt-2">
+                        <div className="text-blue-500 font-semibold">Email</div>
+                        <div className="px-2 py-1 border">{peer.email}</div>
+                    </div> */}
+                    <div className="space-y-2">
+                        <div className="text-blue-500 font-semibold">Bio</div>
+                        <div className="px-5 py-3 pb-4 border text-gray-800 justify">
+                            {peer.bio}
+                        </div>
+                    </div>
+                    <div className="space-y-2">
+                        <div className="text-blue-500 font-semibold">I can teach</div>
+                        <div className="flex gap-1 items-center flex-wrap">
+                            {peer.teachSkills.map((skill, idx) => <Badge key={idx} text={skill} variant="large" />)}
+                        </div>
+                    </div>
+                    <div className="space-y-2">
+                        <div className="text-blue-500 font-semibold">I want to learn</div>
+                        <div className="flex gap-1 items-center flex-wrap">
+                            {peer.learnSkills.map((skill, idx) => <Badge key={idx} text={skill} variant="large" />)}
+                        </div>
+                    </div>
+                </section>
+                <Chat peerId={peer.id} peerUsername={peer.username} />
+            </main>
+            <NavBar />
+            <Spinner loading={loading} />
+        </Fullscreen>
+    )
+}
+
+export default Peer;
