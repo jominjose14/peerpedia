@@ -58,7 +58,7 @@ function Info() {
 
                 <h2 className="text-blue-500 font-bold mt-6">Tech Stack</h2>
                 <ul className="list-disc list-outside pl-5">
-                    <li>Frontend: Node, React, TailwindCSS, ShadCN, Vite</li>
+                    <li>Frontend: TypeScript, Node, React, TailwindCSS, ShadCN, Vite</li>
                     <li>Backend: Java, Spring Boot, JPA, Hibernate, JJWT, Gradle</li>
                     <li>Database: PostgreSQL</li>
                     <li>Deployment: Docker, Render, Neon</li>

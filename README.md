@@ -9,7 +9,7 @@ A social media app for learners
 - Fully responsive web client that supports desktops and smartphones
 
 ### Tech Stack
-- Frontend: Node, React, TailwindCSS, ShadCN, Vite
+- Frontend: TypeScript, Node, React, TailwindCSS, ShadCN, Vite
 - Backend: Java, Spring Boot, JPA, Hibernate, JJWT, Gradle
 - Database: PostgreSQL
 - Deployment: Docker, Render, Neon
