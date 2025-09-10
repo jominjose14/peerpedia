@@ -111,7 +111,7 @@ function Profile() {
                 <div className="flex items-center justify-center gap-2 px-0 sm:px-16 mb-10">
                     <LetterImage username={username} variant="small" />
                     <div>Logged in as <span className="text-blue-500 font-semibold">{username}</span></div>
-                    <button onClick={logout} className="text-center ml-auto cursor-pointer text-blue-500 font-semibold rounded-sm px-2 pt-1 pb-1.5 hover:bg-blue-50">Logout</button>
+                    <button onClick={logout} className="text-center ml-auto cursor-pointer text-blue-500 font-semibold rounded-sm px-2 pt-1 pb-1.5 hover:bg-blue-50 transition">Logout</button>
                 </div>
                 <form className="flex flex-col gap-1 px-0 sm:px-16" onSubmit={onFormSubmit}>
                     <label htmlFor="profile-email" className="text-blue-500 font-semibold">Email</label>

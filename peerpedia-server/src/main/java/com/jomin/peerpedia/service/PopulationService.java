@@ -34,6 +34,14 @@ public class PopulationService {
     private static final String usernamesFile = "usernames.txt";
     private static List<String> skillNames;
 
+    static {
+        Path skillsFilePath = Paths.get(skillsFile);
+        var skillNamesOptional = readLinesFromResourceFile(skillsFilePath);
+        if(skillNamesOptional.isPresent()) {
+            skillNames = skillNamesOptional.get();
+        }
+    }
+
     @Value("${app.population.user-include-count}")
     private int usernamesFileIncludeCount;
 
@@ -46,7 +54,7 @@ public class PopulationService {
     @Autowired
     private SkillRepository skillRepository;
 
-    private Optional<List<String>> readLinesFromResourceFile(Path path) {
+    private static Optional<List<String>> readLinesFromResourceFile(Path path) {
         Optional<List<String>> result = Optional.empty();
         ClassPathResource resource = new ClassPathResource(path.toString());
         try (Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)) {
@@ -58,7 +66,7 @@ public class PopulationService {
         return result;
     }
 
-    private int populateSkills() {
+    private long populateSkills() {
         try {
             long skillCount = skillRepository.count();
             if(0 < skillCount) {
@@ -70,15 +78,7 @@ public class PopulationService {
             return 0;
         }
 
-        Path skillsFilePath = Paths.get(skillsFile);
-        var skillNamesOptional = readLinesFromResourceFile(skillsFilePath);
-        if(skillNamesOptional.isEmpty()) {
-            return 0;
-        } else {
-            skillNames = skillNamesOptional.get();
-        }
-
-        int populatedSkillsCount = 0;
+        long populatedSkillsCount = 0;
         for(String skillName : skillNames) {
             Skill skill = new Skill();
             skill.setName(skillName);
@@ -106,7 +106,7 @@ public class PopulationService {
         }
     }
 
-    private int populateUsers() {
+    private long populateUsers() {
         try {
             long userCount = userRepository.count();
             if(usernamesFileIncludeCount <= userCount) {
@@ -213,11 +213,16 @@ public class PopulationService {
             }
         }
 
-        return usersMap.size();
+        try {
+            return userRepository.count();
+        } catch(Exception ex) {
+            log.info("Failed to get user count from db", ex);
+        }
+        return 0;
     }
 
-    private int populateChats() {
-        int populatedChatsCount = 0;
+    private long populateChats() {
+        long populatedChatsCount = 0;
 
         try {
             User paul = userRepository.findByUsername("paul").get();
@@ -292,20 +297,20 @@ public class PopulationService {
         }
     }
 
-    public Map<String, Integer> populate() {
+    public Map<String, Long> populate() {
         log.info("Populating skills");
-        int populatedSkillsCount = populateSkills();
+        long populatedSkillsCount = populateSkills();
         log.info("Skill population complete. Populated {} skills", populatedSkillsCount);
 
         log.info("Populating dummy users");
-        int populatedUsersCount = populateUsers();
+        long populatedUsersCount = populateUsers();
         log.info("Dummy user population complete. Dummy user count = {}", populatedUsersCount);
 
         log.info("Populating dummy chats");
-        int populatedChatsCount = populateChats();
+        long populatedChatsCount = populateChats();
         log.info("Dummy chats population complete");
 
-        Map<String, Integer> populationResponse = new LinkedHashMap<>();
+        Map<String, Long> populationResponse = new LinkedHashMap<>();
         populationResponse.put("Populated skills count", populatedSkillsCount);
         populationResponse.put("Populated users count", populatedUsersCount);
         populationResponse.put("Populated chats count", populatedChatsCount);

@@ -7,7 +7,7 @@ function Spinner({ loading }: SpinnerProps) {
 
     return (
         <div className="fixed inset-0 grid place-items-center backdrop-blur-xs">
-            <img src="spinner.svg" alt="loading spinner" height="5vw" width="5vw" className="size-15" />
+            <img src="spinner.svg" alt="loading spinner" height="5vw" width="5vw" className="size-10" />
         </div>
     );
 }

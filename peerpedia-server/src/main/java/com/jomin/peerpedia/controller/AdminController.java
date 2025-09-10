@@ -45,7 +45,7 @@ public class AdminController {
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
-        Map<String, Integer> populationResponse = populationService.populate();
+        Map<String, Long> populationResponse = populationService.populate();
         statsService.updateStats();
 
         responseBody.put("success", true);

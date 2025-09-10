@@ -5,7 +5,7 @@ function NavBar() {
     const imgStyle = "size-[9vw] sm:size-[2vw]";
 
     return (
-        <div className="fixed bottom-[1vh] sm:bottom-2 left-1/2 transform -translate-x-1/2 w-15/16 sm:w-fit rounded-sm bg-white flex justify-center items-center gap-2 opacity-90 hover:opacity-100 transition">
+        <div className="fixed bottom-[1vh] sm:bottom-2 left-1/2 transform -translate-x-1/2 w-15/16 sm:w-fit rounded-sm  backdrop-blur-xs flex justify-center items-center gap-2 opacity-90 hover:opacity-100 transition">
             <Link to="/" className={anchorStyle}>
                 <img src="home.svg" alt="info" title="Home" height="1vw" width="1vw" className={imgStyle} />
             </Link>
