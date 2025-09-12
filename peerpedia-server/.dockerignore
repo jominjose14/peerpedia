@@ -1,0 +1,44 @@
+# Ignore common build artifacts
+target/
+# build/
+
+# Ignore IDE-specific files and directories
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+
+# Ignore Git-related files
+.git/
+.gitignore
+
+# Ignore Maven/Gradle wrapper files (if not needed in the image)
+# If you use the wrapper inside the container for building, you might want to include these
+mvnw
+mvnw.cmd
+.mvn/
+gradlew
+gradlew.bat
+.gradle/
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore temporary files
+tmp/
+temp/
+
+# Ignore Docker-related files (except the Dockerfile itself)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Ignore specific files that are not needed in the image
+*.jar.original # Maven backup files
+*.bak
+*.swp
+
+.env

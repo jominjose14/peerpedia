@@ -7,7 +7,7 @@ import ProtectedRoute from './components/routes/ProtectedRoute'
 import { Toaster } from 'sonner'
 import Teach from './components/routes/Teach'
 import Learn from './components/routes/Learn'
-import Info from './components/routes/Info'
+import Home from './components/routes/Home'
 import Matchmaking from './components/routes/Matchmaking'
 import Peer from './components/routes/Peer'
 
@@ -15,7 +15,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ProtectedRoute><Info /></ProtectedRoute>} />
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/teach" element={<ProtectedRoute><Teach /></ProtectedRoute>} />
         <Route path="/learn" element={<ProtectedRoute><Learn /></ProtectedRoute>} />
         <Route path="/explore" element={<ProtectedRoute><Explore /></ProtectedRoute>} />

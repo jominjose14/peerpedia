@@ -45,7 +45,7 @@ function Peer() {
 
     return (
         <Fullscreen>
-            <main className="min-h-screen w-full sm:w-13/32 m-auto shadow-[0_0_1.5rem_rgb(0,0,0,0.09)] pt-8 px-6 sm:px-16 pb-24">
+            <main className="min-h-screen w-full sm:w-13/32 m-auto shadow-[0_0_1.5rem_rgb(0,0,0,0.09)] pt-8 px-6 sm:px-16 pb-24 bg-white">
                 <header className="flex flex-col gap-2 items-center justify-center">
                     <LetterImage username={peer.username} variant="large" />
                     <div>@{peer.username}</div>
@@ -57,7 +57,7 @@ function Peer() {
                     </div> */}
                     <div className="space-y-2">
                         <div className="text-blue-500 font-semibold">Bio</div>
-                        <div className="px-5 py-3 pb-4 border text-gray-800 justify">
+                        <div className="px-5 py-3 pb-4 rounded-md border text-gray-800 justify">
                             {peer.bio}
                         </div>
                     </div>

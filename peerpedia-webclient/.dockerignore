@@ -1,0 +1,38 @@
+# Node.js specific
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnp.*
+.npm/
+
+# TypeScript specific
+*.tsbuildinfo
+
+# Build outputs
+dist/
+build/
+out/
+
+# React specific
+.env
+.env.*
+.next/ # If using Next.js
+.cache/ # If using Create React App or similar build tools
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# Editor/IDE specific
+.vscode/
+.idea/
+*.swp
+*.bak
+*~
+*.log
+
+# Operating System specific
+.DS_Store
+Thumbs.db

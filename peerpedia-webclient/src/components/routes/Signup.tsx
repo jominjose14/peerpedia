@@ -42,8 +42,8 @@ function Signup() {
     }
 
     return (
-        <div className="h-screen w-full grid place-items-center animate-fade">
-            <form className="flex flex-col gap-2 rounded-sm shadow-[0_0_1.25rem_rgb(0,0,0,0.125)] p-12 max-w-15/16" onSubmit={onFormSubmit}>
+        <div className="h-screen w-full grid place-items-center animate-fade bg-gradient-to-r from-blue-50 via-white to-blue-50">
+            <form className="flex flex-col gap-2 rounded-sm bg-white shadow-[0_0_1.25rem_rgb(0,0,0,0.125)] p-12 max-w-15/16" onSubmit={onFormSubmit}>
                 <div className="flex gap-4 items-center justify-center mb-6">
                     <img src="favicon.svg" alt="peerpedia icon" height="30px" width="30px" />
                     <h1 className="text-xl">Signup</h1>

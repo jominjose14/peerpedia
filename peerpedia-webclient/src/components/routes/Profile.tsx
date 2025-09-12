@@ -94,16 +94,16 @@ function Profile() {
     }
 
     function getBioCharsLeftColor(): string {
-        if (0 < bioCharsLeft) {
-            return "text-blue-500";
-        } else {
+        if (bioCharsLeft < 10) {
             return "text-red-500";
+        } else {
+            return "text-blue-500";
         }
     }
 
     return (
         <Fullscreen>
-            <main className="min-h-screen w-full sm:w-13/32 m-auto shadow-[0_0_1.5rem_rgb(0,0,0,0.09)] pt-8 px-8 pb-24">
+            <main className="min-h-screen w-full sm:w-13/32 m-auto shadow-[0_0_1.5rem_rgb(0,0,0,0.09)] pt-8 px-8 pb-24 bg-white">
                 <header className="flex gap-2 items-center justify-center mb-10">
                     <img src="profile.svg" alt="profile icon" height="30px" width="30px" />
                     <h1 className="text-2xl">Profile</h1>
@@ -115,11 +115,11 @@ function Profile() {
                 </div>
                 <form className="flex flex-col gap-1 px-0 sm:px-16" onSubmit={onFormSubmit}>
                     <label htmlFor="profile-email" className="text-blue-500 font-semibold">Email</label>
-                    <input type="text" name="email" id="profile-email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="border-[1px] border-gray-200 focus:border-blue-500 outline-none px-3 py-1.5" />
+                    <input type="text" name="email" id="profile-email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-md border focus:border-blue-500 outline-none px-3 py-1.5" />
 
                     <label htmlFor="profile-teach" className="mt-3 text-blue-500 font-semibold">I can teach</label>
-                    <MultiSelect values={teachSkills} onValuesChange={setTeachSkills}>
-                        <MultiSelectTrigger className="w-full rounded-none">
+                    <MultiSelect values={teachSkills} onValuesChange={setTeachSkills} >
+                        <MultiSelectTrigger className="w-full">
                             <MultiSelectValue placeholder="Select skills you can teach" />
                         </MultiSelectTrigger>
                         <MultiSelectContent>
@@ -129,7 +129,7 @@ function Profile() {
 
                     <label htmlFor="profile-learn" className="mt-3 text-blue-500 font-semibold">I want to learn</label>
                     <MultiSelect values={learnSkills} onValuesChange={setLearnSkills}>
-                        <MultiSelectTrigger className="w-full rounded-none">
+                        <MultiSelectTrigger className="w-full">
                             <MultiSelectValue placeholder="Select skills you want to learn" />
                         </MultiSelectTrigger>
                         <MultiSelectContent>
@@ -138,8 +138,8 @@ function Profile() {
                     </MultiSelect>
 
                     <label htmlFor="profile-bio" className="mt-3 text-blue-500 font-semibold">Bio</label>
-                    <div className="border-[1px] border-gray-200 px-3 py-1.5 focus-within:border-blue-500">
-                        <textarea name="bio" id="profile-bio" rows={9} placeholder="Tell the world a little about how well you know the skills you teach and what interests you about the skills you wish to learn" value={bio} onChange={(e) => setBio(e.target.value)} className="w-full outline-none" />
+                    <div className="rounded-md border px-4 py-2.5 focus-within:border-blue-500">
+                        <textarea name="bio" id="profile-bio" rows={9} placeholder="Tell the world a little about how well you know the skills you teach and what interests you about the skills you wish to learn" value={bio} onChange={(e) => setBio(e.target.value.substring(0, bioCharsLimit))} className="w-full outline-none" />
                         <div className={`${getBioCharsLeftColor()} text-xs font-semibold text-right`}>
                             {bioCharsLeft}
                         </div>
