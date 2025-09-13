@@ -5,6 +5,7 @@ import com.jomin.peerpedia.data.entity.Skill;
 import com.jomin.peerpedia.data.entity.User;
 import com.jomin.peerpedia.data.repository.SkillRepository;
 import com.jomin.peerpedia.dto.ChatMessageResponse;
+import com.jomin.peerpedia.service.SkillService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -30,7 +31,7 @@ import java.util.Map;
 @Validated
 public class SkillController {
 
-    private final SkillRepository skillRepository;
+    private final SkillService skillService;
 
     @GetMapping(value = "/all")
     public ResponseEntity<Map<String,Object>> getAllSkills() {
@@ -38,7 +39,7 @@ public class SkillController {
 
         List<Skill> skillRows;
         try {
-            skillRows = skillRepository.findAll();
+            skillRows = skillService.getAll();
         } catch(Exception ex) {
             log.error("Failed to get all skills", ex);
             responseBody.put("success", false);

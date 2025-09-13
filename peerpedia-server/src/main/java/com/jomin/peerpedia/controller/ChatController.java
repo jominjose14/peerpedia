@@ -1,12 +1,10 @@
 package com.jomin.peerpedia.controller;
 
-import com.jomin.peerpedia.bean.RequestLocal;
-import com.jomin.peerpedia.data.entity.ChatMessage;
 import com.jomin.peerpedia.data.entity.User;
-import com.jomin.peerpedia.data.repository.ChatMessageRepository;
-import com.jomin.peerpedia.data.repository.UserRepository;
 import com.jomin.peerpedia.dto.ChatMessageRequest;
 import com.jomin.peerpedia.dto.ChatMessageResponse;
+import com.jomin.peerpedia.service.ChatMessageService;
+import com.jomin.peerpedia.service.UserService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -26,23 +24,22 @@ import java.util.*;
 @Validated
 public class ChatController {
 
-    private final RequestLocal requestLocal;
-    private final ChatMessageRepository chatMessageRepository;
-    private final UserRepository userRepository;
+    private final ChatMessageService chatMessageService;
+    private final UserService userService;
 
     @GetMapping(value = "/history", params = {"start", "end", "user-id"})
-    public ResponseEntity<Map<String,Object>> getHistory(@RequestParam("start") @NotNull @Min(1) @Max(1000000000) Long start, @RequestParam("end") @NotNull @Min(1) @Max(1000000000) Long end, @RequestParam("user-id") @NotNull @Min(1) @Max(1000000) Long userId) {
-        User currentUser = requestLocal.getCurrentUser();
-        List<ChatMessage> chatMessageRows = chatMessageRepository.findTop20ByIdBetweenAndFrom_IdAndTo_IdOrFrom_IdAndTo_IdOrderByIdAsc(start, end, currentUser.getId(), userId, userId, currentUser.getId());
-        List<ChatMessageResponse> history = new ArrayList<>(chatMessageRows.size());
-        for(var chatMessageRow : chatMessageRows) {
-            history.add(new ChatMessageResponse(chatMessageRow));
+    public ResponseEntity<Map<String,Object>> getHistory(@RequestParam("start") @NotNull @Min(1) @Max(1000000000) Long startId, @RequestParam("end") @NotNull @Min(1) @Max(1000000000) Long endId, @RequestParam("user-id") @NotNull @Min(1) @Max(1000000) Long userId) {
+        Map<String,Object> responseBody = new LinkedHashMap<>();
+        Optional<List<ChatMessageResponse>> history = chatMessageService.getHistory(startId, endId, userId);
+        if(history.isEmpty()) {
+            responseBody.put("success", false);
+            responseBody.put("message", "Failed to fetch chat history");
+            return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        Map<String,Object> responseBody = new LinkedHashMap<>();
         responseBody.put("success", true);
-        responseBody.put("message", "Fetched logged in user");
-        responseBody.put("payload", history);
+        responseBody.put("message", "Fetched chat history");
+        responseBody.put("payload", history.get());
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
@@ -50,31 +47,24 @@ public class ChatController {
     public ResponseEntity<Map<String,Object>> postChatMessage(@RequestBody ChatMessageRequest requestBody) {
         Map<String,Object> responseBody = new LinkedHashMap<>();
 
-        Optional<User> userOptional = userRepository.findById(requestBody.getRecipientId());
-        if(userOptional.isEmpty()) {
+        Optional<User> toUserOptional = userService.getRow(requestBody.getRecipientId());
+        if(toUserOptional.isEmpty()) {
             responseBody.put("success", false);
             responseBody.put("message", "Chat message recipient user does not exist");
             return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
 
-        User toUser = userOptional.get();
-        User fromUser = requestLocal.getCurrentUser();
-        ChatMessage row = new ChatMessage();
-        row.setFrom(fromUser);
-        row.setTo(toUser);
-        row.setMessage(requestBody.getMessage());
-
-        try {
-            row = chatMessageRepository.save(row);
-            responseBody.put("success", true);
-            responseBody.put("message", "Chat message saved");
-            responseBody.put("payload", new ChatMessageResponse(row));
-            return new ResponseEntity<>(responseBody, HttpStatus.OK);
-        } catch(Exception ex) {
-            log.error("Failed to persist chat message", ex);
+        Optional<User> fromUserOptional = userService.getCurrentUserRow();
+        if(fromUserOptional.isEmpty()) {
             responseBody.put("success", false);
-            responseBody.put("message", "Something went wrong");
-            return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
+            responseBody.put("message", "Chat message author user does not exist");
+            return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
         }
+
+        ChatMessageResponse chatMessageResponse = chatMessageService.create(fromUserOptional.get(), toUserOptional.get(), requestBody.getMessage());
+        responseBody.put("success", true);
+        responseBody.put("message", "Chat message saved");
+        responseBody.put("payload", chatMessageResponse);
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 }

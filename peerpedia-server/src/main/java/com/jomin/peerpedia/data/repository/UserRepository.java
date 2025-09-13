@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
+
     List<User> findTop10ByIdBetweenAndIdNotOrderByIdDesc(Long startId, Long endId, Long excludeId);
 
     @Query(value = """

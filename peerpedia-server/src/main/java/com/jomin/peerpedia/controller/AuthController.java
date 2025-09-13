@@ -1,10 +1,11 @@
 package com.jomin.peerpedia.controller;
 
-import com.jomin.peerpedia.data.entity.User;
-import com.jomin.peerpedia.data.repository.UserRepository;
 import com.jomin.peerpedia.dto.LoginRequest;
 import com.jomin.peerpedia.dto.SignupRequest;
+import com.jomin.peerpedia.dto.UserResponse;
 import com.jomin.peerpedia.security.JwtProvider;
+import com.jomin.peerpedia.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,29 +13,22 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
+@AllArgsConstructor
 @Validated
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-
-    public AuthController(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.authenticationManager = authenticationManager;
-        this.jwtProvider = jwtProvider;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final UserService userService;
 
     @GetMapping("/test")
     public Map<String,Object> getTest() {
@@ -68,21 +62,24 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<Map<String,Object>> registerUser(@RequestBody SignupRequest signupRequest) {
-        if (userRepository.findByUsername(signupRequest.getUsername()).isPresent()) {
+        if (userService.get(signupRequest.getUsername()).isPresent()) {
             Map<String,Object> resBody = new LinkedHashMap<>();
             resBody.put("success", false);
             resBody.put("message", "Username is already taken");
             return new ResponseEntity<>(resBody, HttpStatus.BAD_REQUEST);
         }
 
-        User user = new User();
-        user.setUsername(signupRequest.getUsername());
-        user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
-        userRepository.save(user);
-
         Map<String,Object> resBody = new LinkedHashMap<>();
+        Optional<UserResponse> userResponseOptional = userService.create(signupRequest);
+        if(userResponseOptional.isEmpty()) {
+            resBody.put("success", false);
+            resBody.put("message", "Signup failed");
+            return new ResponseEntity<>(resBody, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         resBody.put("success", true);
         resBody.put("message", "User registered successfully");
+        resBody.put("payload", userResponseOptional.get());
         return new ResponseEntity<>(resBody, HttpStatus.OK);
     }
 }

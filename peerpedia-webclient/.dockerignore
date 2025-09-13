@@ -10,7 +10,7 @@ yarn-error.log
 *.tsbuildinfo
 
 # Build outputs
-dist/
+# dist/
 build/
 out/
 

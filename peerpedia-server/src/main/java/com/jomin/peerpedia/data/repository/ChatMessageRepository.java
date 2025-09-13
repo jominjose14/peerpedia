@@ -1,6 +1,7 @@
 package com.jomin.peerpedia.data.repository;
 
 import com.jomin.peerpedia.data.entity.ChatMessage;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

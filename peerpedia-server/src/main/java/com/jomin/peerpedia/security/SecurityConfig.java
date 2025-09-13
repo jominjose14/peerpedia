@@ -21,8 +21,8 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${app.frontend-domain}")
-    private String frontendDomain;
+    @Value("${app.webclient-domain}")
+    private String webclientDomain;
 
     private final JwtAuthFilter jwtAuthFilter;
 
@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Arrays.asList(frontendDomain));
+                    config.setAllowedOrigins(Arrays.asList(webclientDomain));
                     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(Arrays.asList("*"));
                     config.setAllowCredentials(true);

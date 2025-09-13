@@ -1,8 +1,8 @@
 interface SpinnerProps {
-    loading: boolean,
+    loading?: boolean,
 }
 
-function Spinner({ loading }: SpinnerProps) {
+function Spinner({ loading = true }: SpinnerProps) {
     if (!loading) return null;
 
     return (
