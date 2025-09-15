@@ -10,6 +10,6 @@ A social media app for learners
 
 ### Tech Stack
 - Frontend: TypeScript, Node, React, TailwindCSS, ShadCN, Vite
-- Backend: Java, Spring Boot, JPA, Hibernate, JJWT, Gradle
+- Backend: Java, Spring Boot, JPA, Hibernate, JJWT, Gradle, Redis, Nginx
 - Database: PostgreSQL
 - Deployment: Docker, Render, Neon
