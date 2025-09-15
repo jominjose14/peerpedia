@@ -70,13 +70,13 @@ function Chat({ peerId, peerUsername }: ChatProps) {
 
     return (
         <section className="mt-8">
-            <div className="text-lg text-center text-blue-500 font-semibold">Chat</div>
-            <div ref={chatBox} className="h-110 overflow-y-auto rounded-md border p-4 mt-4 space-y-2">
+            <div className="text-xl text-center text-blue-500 font-bold">Chat</div>
+            <div ref={chatBox} className="h-120 overflow-y-auto rounded-md border p-4 mt-4 space-y-2">
                 {messages.length === 0 ? <p className="text-center text-gray-400"> - No messages yet - </p> : messages.map(message => <ChatMessageTile key={message.id} chatMessage={message} peerId={peerId} peerUsername={peerUsername} />)}
             </div>
             <form onSubmit={onFormSubmit} className="mt-2">
                 <input type="text" name="chat-message" id="chat-message" value={curMessage} onChange={e => setCurMessage(e.target.value)} placeholder="Type a message" className="w-full rounded-md border px-4 py-2 outline-blue-500" />
-                <button type="submit" disabled={loading} className="w-1/3 font-semi-bold mt-2 block mx-auto cursor-pointer px-2 py-2.5 bg-blue-500 hover:bg-blue-400 transition text-blue-50 rounded-4xl">Send</button>
+                <button type="submit" disabled={loading} className="w-1/3 sm:w-1/4 font-semi-bold mt-2 block mx-auto cursor-pointer px-2 py-2.5 bg-blue-500 hover:bg-blue-400 transition text-blue-50 rounded-4xl">Send</button>
             </form>
         </section>
     );

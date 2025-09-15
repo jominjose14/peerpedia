@@ -7,6 +7,9 @@ import { toast } from "sonner";
 import Fullscreen from "../Fullscreen";
 import Main from "../Main";
 import Spinner from "../Spinner";
+import Page from "../Page";
+import Header from "../Header";
+import Intro from "../Intro";
 
 function Explore() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -43,17 +46,16 @@ function Explore() {
 
     return (
         <Fullscreen>
-            <Main>
-                <header className="flex gap-2 items-center justify-center mb-4">
-                    <img src="explore.svg" alt="explore icon" height="30px" width="30px" />
-                    <h1 className="text-2xl">Explore</h1>
-                </header>
-                <p className="font-light text-sm text-center mb-2">Make friends with fellow learners</p>
-                <div className="p-4 flex flex-col gap-4">
-                    {peers.map(peer => <PeerCard key={peer.id} peer={peer} />)}
-                </div>
-                <button disabled={loading} onClick={loadPeers} className="block mx-auto cursor-pointer text-blue-500">Load more</button>
-            </Main>
+            <Page>
+                <Header iconSrc="explore.svg" iconStyles="pt-1 scale-111" text="Explore" />
+                <Main>
+                    <Intro text="Make friends with fellow learners" />
+                    <div className="p-4 flex flex-col gap-4">
+                        {peers.map(peer => <PeerCard key={peer.id} peer={peer} />)}
+                    </div>
+                    <button disabled={loading} onClick={loadPeers} className="block mx-auto cursor-pointer text-blue-500">Load more</button>
+                </Main>
+            </Page>
             <NavBar />
             <Spinner loading={loading} />
         </Fullscreen>

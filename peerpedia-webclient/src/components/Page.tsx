@@ -1,15 +1,14 @@
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
-interface FullscreenProps {
+interface PageProps {
     className?: string,
     children: ReactNode,
 }
 
-function Fullscreen({ className = "", children }: FullscreenProps) {
-    const baseStyles = "min-h-screen w-full animate-fade bg-gradient-to-r from-blue-50 via-white to-blue-50";
+function Page({ className = "", children }: PageProps) {
+    const baseStyles = "w-full sm:w-9/16 m-auto";
     const mergedStyles = cn(baseStyles, className);
-
     return (
         <div className={mergedStyles}>
             {children}
@@ -17,4 +16,4 @@ function Fullscreen({ className = "", children }: FullscreenProps) {
     );
 }
 
-export default Fullscreen;
+export default Page;

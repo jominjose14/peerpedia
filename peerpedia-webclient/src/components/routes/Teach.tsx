@@ -7,6 +7,9 @@ import { toast } from "sonner";
 import Fullscreen from "../Fullscreen";
 import Main from "../Main";
 import Spinner from "../Spinner";
+import Page from "../Page";
+import Header from "../Header";
+import Intro from "../Intro";
 
 function Teach() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -43,17 +46,16 @@ function Teach() {
 
     return (
         <Fullscreen>
-            <Main>
-                <header className="flex gap-2 items-center justify-center mb-4">
-                    <img src="teach.svg" alt="teach icon" height="30px" width="30px" />
-                    <h1 className="text-2xl">Teach</h1>
-                </header>
-                <p className="font-light text-sm text-center mb-2">Teach peers who want to learn the skills you have</p>
-                <div className="p-4 flex flex-col gap-4">
-                    {peers.length === 0 ? <p className="text-center text-gray-500"> - No matches - </p> : peers.map(peer => <PeerCard key={peer.id} peer={peer} />)}
-                </div>
-                <button disabled={loading} onClick={loadPeers} className="block mx-auto cursor-pointer text-blue-500">Load more</button>
-            </Main>
+            <Page>
+                <Header iconSrc="teach.svg" text="Teach" />
+                <Main>
+                    <Intro text="Teach peers who want to learn the skills you have" />
+                    <div className="p-4 flex flex-col gap-4">
+                        {peers.length === 0 ? <p className="text-center text-gray-500"> - No matches - </p> : peers.map(peer => <PeerCard key={peer.id} peer={peer} />)}
+                    </div>
+                    <button disabled={loading} onClick={loadPeers} className="block mx-auto cursor-pointer text-blue-500">Load more</button>
+                </Main>
+            </Page>
             <NavBar />
             <Spinner loading={loading} />
         </Fullscreen>

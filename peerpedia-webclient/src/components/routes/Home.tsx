@@ -7,6 +7,8 @@ import { CountingNumber } from "../ui/shadcn-io/counting-number";
 import SkillChart from "../SkillChart";
 import type { PlottableSkill, PopularSkills } from "../../lib/types";
 import Main from "../Main";
+import Header from "../Header";
+import Page from "../Page";
 
 function Home() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -45,50 +47,51 @@ function Home() {
         setLoading(false);
     }
 
+    const h2Style = "text-blue-500 font-bold text-lg sm:text-xl mt-12";
+    const iconSize = "25px";
+
     return (
         <Fullscreen>
-            <Main className="pt-8 px-6 sm:px-16 pb-24">
-                <header className="flex gap-2 items-center justify-center mb-8">
-                    <img src="favicon.svg" alt="peerpedia icon" height="30px" width="30px" />
-                    <h1 className="text-2xl">Peerpedia</h1>
-                </header>
+            <Page>
+                <Header text="Peerpedia" iconSrc="favicon.svg" />
+                <Main className="pt-12 px-6 sm:px-20 pb-24 text-gray-700">
+                    <h2 className={h2Style + "mt-0"}>About</h2>
+                    <p className="mt-3 px-5 pt-3 pb-4 rounded-lg border text-justify">Welcome to Peerpedia. Get matched with peers who want to learn from you and teach them in return!</p>
 
-                <h2 className="text-blue-500 font-bold">About</h2>
-                <p className="mt-3 px-5 pt-3 pb-4 rounded-lg border text-justify">Welcome to Peerpedia. Get matched with peers who want to learn from you and teach them in return!</p>
+                    <h2 className={h2Style}>Get started</h2>
+                    <ul className="mt-3 pl-11 pr-4 pt-4 pb-5 rounded-lg border list-disc list-outside space-y-1">
+                        <li>Click on Profile tab <img className="inline" src="profile.svg" alt="profile icon" height={iconSize} width={iconSize} /> from the bottom nav bar</li>
+                        <li>Provide your email and skills. Then,</li>
+                        <li>Click on Matchmaking tab <img className="inline" src="matchmaking.svg" alt="matchmaking icon" height={iconSize} width={iconSize} /> for algorithmic matchmaking with peers who can learn from each other</li>
+                        <li>Click on Teach tab <img className="inline" src="teach.svg" alt="teach icon" height={iconSize} width={iconSize} /> to find peers to teach</li>
+                        <li>Click on Learn tab <img className="inline" src="learn.svg" alt="learn icon" height={iconSize} width={iconSize} /> to find peers to learn from</li>
+                    </ul>
 
-                <h2 className="text-blue-500 font-bold mt-8">Get started</h2>
-                <ul className="mt-3 pl-11 pr-4 pt-4 pb-5 rounded-lg border list-disc list-outside space-y-1">
-                    <li>Click on Profile tab <img className="inline" src="profile.svg" alt="profile icon" height="20px" width="20px" /> from the bottom nav bar</li>
-                    <li>Provide your email and skills. Then,</li>
-                    <li>Click on Matchmaking tab <img className="inline" src="matchmaking.svg" alt="matchmaking icon" height="20px" width="20px" /> for algorithmic matchmaking with peers who can learn from each other</li>
-                    <li>Click on Teach tab <img className="inline" src="teach.svg" alt="teach icon" height="20px" width="20px" /> to find peers to teach</li>
-                    <li>Click on Learn tab <img className="inline" src="learn.svg" alt="learn icon" height="20px" width="20px" /> to find peers to learn from</li>
-                </ul>
-
-                <h2 className="text-blue-500 font-bold mt-8">Stats</h2>
-                <div className="mt-3 px-4 pt-4 pb-8 rounded-lg border">
-                    <div className="">
-                        <CountingNumber number={userCount} inView={true} transition={{ stiffness: 100, damping: 30 }} className="block text-center text-[2.5rem] font-bold bg-gradient-to-r from-blue-950 via-blue-500 to-blue-50 text-transparent bg-clip-text" />
-                        <p className="text-center font-light">Total users on Peerpedia</p>
+                    <h2 className={h2Style}>Stats</h2>
+                    <div className="mt-3 px-4 pt-8 pb-12 rounded-lg border">
+                        <div className="">
+                            <CountingNumber number={userCount} inView={true} inViewMargin="-100px" transition={{ stiffness: 100, damping: 30 }} className="block text-center text-[3rem] sm:text-[3.5rem] font-bold bg-gradient-to-r from-blue-950 via-blue-500 to-blue-50 text-transparent bg-clip-text" />
+                            <p className="text-center font-light">Total users on Peerpedia</p>
+                        </div>
+                        <div className="space-y-1 mt-12">
+                            <SkillChart data={mostKnownSkills} />
+                            <p className="text-center font-light">Most known skills</p>
+                        </div>
+                        <div className="space-y-1 mt-13">
+                            <SkillChart data={mostSaughtSkills} />
+                            <p className="text-center font-light">Most saught-after skills</p>
+                        </div>
                     </div>
-                    <div className="space-y-1 mt-6">
-                        <SkillChart data={mostKnownSkills} />
-                        <p className="text-center font-light">Most known skills</p>
-                    </div>
-                    <div className="space-y-1 mt-4">
-                        <SkillChart data={mostSaughtSkills} />
-                        <p className="text-center font-light">Most saught-after skills</p>
-                    </div>
-                </div>
 
-                <h2 className="text-blue-500 font-bold mt-8">Tech Stack</h2>
-                <ul className="mt-3 pl-11 pr-5 pt-4 pb-5 rounded-lg border list-disc list-outside space-y-1">
-                    <li>Frontend: TypeScript, Node, React, TailwindCSS, ShadCN, Vite</li>
-                    <li>Backend: Java, Spring Boot, JPA, Hibernate, JJWT, Gradle, Redis, Nginx</li>
-                    <li>Database: PostgreSQL</li>
-                    <li>Deployment: Docker, Render, Neon</li>
-                </ul>
-            </Main>
+                    <h2 className={h2Style}>Tech Stack</h2>
+                    <ul className="mt-3 pl-11 pr-5 pt-4 pb-5 rounded-lg border list-disc list-outside space-y-1">
+                        <li>Frontend: TypeScript, Node, React, TailwindCSS, ShadCN, Vite</li>
+                        <li>Backend: Java, Spring Boot, JPA, Hibernate, JJWT, Gradle, Redis, Nginx</li>
+                        <li>Database: PostgreSQL</li>
+                        <li>Deployment: Docker, Render, Neon</li>
+                    </ul>
+                </Main>
+            </Page>
             <NavBar />
             <Spinner loading={loading} />
         </Fullscreen>

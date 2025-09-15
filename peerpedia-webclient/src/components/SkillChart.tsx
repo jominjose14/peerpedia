@@ -7,8 +7,15 @@ interface SkillChartProps {
 }
 
 function SkillChart({ data }: SkillChartProps) {
-    const yMin = 5 <= data.length ? Math.trunc(0.975 * data[4].count) : null;
-    const yMax = 1 <= data.length ? Math.trunc(1.01 * data[0].count) : null;
+    let minCount = 9_999_999_999;
+    let maxCount = 0;
+    for (const dataPoint of data) {
+        minCount = Math.min(minCount, dataPoint.count);
+        maxCount = Math.max(maxCount, dataPoint.count);
+    }
+
+    const xMin = Math.trunc(0.975 * minCount);
+    const xMax = Math.trunc(1.01 * maxCount);
 
     if (1 <= data.length) data[0].fill = "oklch(70% 0.214 259.815)";
     if (2 <= data.length) data[1].fill = "oklch(65% 0.214 259.815)";
@@ -24,23 +31,28 @@ function SkillChart({ data }: SkillChartProps) {
     } satisfies ChartConfig;
 
     return (
-        <ChartContainer config={chartConfig} className="min-h-[17rem] w-14/16 sm:w-12/16 mx-auto">
-            <BarChart accessibilityLayer data={data}>
-                <CartesianGrid vertical={false} />
+        <ChartContainer config={chartConfig} className="min-h-[15rem] sm:min-h-[20rem] w-full sm:w-13/16 mx-auto">
+            <BarChart accessibilityLayer data={data} layout="vertical">
+                <CartesianGrid horizontal={false} />
                 <XAxis
+                    type="number"
+                    domain={xMin !== null && xMax !== null ? [xMin, xMax] : undefined}
+                    hide={true}
+                />
+                <YAxis
+                    type="category"
                     dataKey="skill"
                     tickLine={false}
                     tickMargin={10}
                     axisLine={false}
                 />
-                {yMin !== null && yMax !== null && <YAxis domain={[yMin, yMax]} hide={true} />}
                 <ChartTooltip
                     cursor={false}
                     content={<ChartTooltipContent hideLabel />}
                 />
                 <Bar dataKey="count" fill="oklch(62.3% 0.214 259.815)" radius={8}>
                     <LabelList
-                        position="top"
+                        position="right"
                         offset={12}
                         className="fill-foreground"
                         fontSize={10}

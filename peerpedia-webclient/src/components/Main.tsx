@@ -2,12 +2,12 @@ import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
 interface MainProps {
-    className: string,
+    className?: string,
     children: ReactNode,
 }
 
-function Main({ className, children }: MainProps) {
-    const baseStyles = "min-h-screen w-full sm:w-13/32 m-auto bg-white shadow-[0_0_1.5rem_rgb(0,0,0,0.09)] p-6 px-1 sm:px-6 pb-24";
+function Main({ className = "", children }: MainProps) {
+    const baseStyles = "min-h-screen bg-white border-x-[1px] border-gray-100 shadow-[0_0_2rem_rgb(0,0,0,0.1)] text-md sm:text-lg text-gray-800 p-6 px-1 sm:px-8 pb-24";
     const mergedStyles = cn(baseStyles, className);
 
     return (

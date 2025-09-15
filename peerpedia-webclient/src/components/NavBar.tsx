@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function NavBar() {
     const anchorStyle = "p-3 bg-white rounded-sm border border-gray-300 hover:scale-115 transition";
-    const imgStyle = "size-[9vw] sm:size-[2vw]";
+    const imgStyle = "size-[9vw] sm:size-[2.25vw]";
 
     return (
         <div className="fixed bottom-[1vh] sm:bottom-2 left-1/2 transform -translate-x-1/2 w-15/16 sm:w-fit rounded-sm  backdrop-blur-xs flex justify-center items-center gap-2 opacity-90 hover:opacity-100 transition">
