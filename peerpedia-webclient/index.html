@@ -16,6 +16,8 @@
         color: white;
         background-color: oklch(62.3% 0.214 259.815);
         z-index: 999999999;
+        opacity: 1;
+        transition: opacity 700ms ease-in-out;
       }
 
       #splash-screen span {
@@ -31,24 +33,26 @@
         }
       }
 
-      #splash-screen.invisible {
-        opacity: 0;
-        pointer-events: none;
+      .hide-overflow {
+        overflow: hidden;
       }
     </style>
   </head>
-  <body>
+  <body class="hide-overflow">
     <div id="splash-screen">
       <span>Peerpedia</span>
     </div>
     <div id="root"></div>
     <script>
-      setTimeout(() => {
-        const splashScreen = document.getElementById("splash-screen");
-        if (!splashScreen) return;
-        splashScreen.classList.add("invisible");
-        setTimeout(() => splashScreen.remove(), 3_000);
-      }, 3_000);
+      document.addEventListener('DOMContentLoaded', (event) => {
+        setTimeout(() => {
+          document.body.classList.remove("hide-overflow");
+          const splashScreen = document.getElementById("splash-screen");
+          if (!splashScreen) return;
+          setTimeout(() => splashScreen.style.opacity = '0', 0);
+          splashScreen.addEventListener('transitionend', () => splashScreen.remove());
+        }, 3_000);
+      });
     </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>

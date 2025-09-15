@@ -1,12 +1,17 @@
+import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
 interface MainProps {
+    className: string,
     children: ReactNode,
 }
 
-function Main({ children }: MainProps) {
+function Main({ className, children }: MainProps) {
+    const baseStyles = "min-h-screen w-full sm:w-13/32 m-auto bg-white shadow-[0_0_1.5rem_rgb(0,0,0,0.09)] p-6 px-1 sm:px-6 pb-24";
+    const mergedStyles = cn(baseStyles, className);
+
     return (
-        <main className="min-h-screen w-full sm:w-13/32 m-auto bg-white drop-shadow-xl p-6 px-1 sm:px-6 pb-24">
+        <main className={mergedStyles}>
             {children}
         </main>
     );

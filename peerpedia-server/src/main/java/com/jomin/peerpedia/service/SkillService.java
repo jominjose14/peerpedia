@@ -17,7 +17,7 @@ public class SkillService {
 
     private final SkillRepository skillRepository;
 
-    @Cacheable("skills")
+    @Cacheable(value = "skills", unless = "#result == null")
     public Optional<Skill> get(String name) {
         return skillRepository.findByName(name);
     }

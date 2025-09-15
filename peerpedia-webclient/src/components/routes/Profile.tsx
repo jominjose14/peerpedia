@@ -10,6 +10,7 @@ import LetterImage from "../LetterImage";
 import { useNavigate } from "react-router-dom";
 import Fullscreen from "../Fullscreen";
 import Spinner from "../Spinner";
+import Main from "../Main";
 
 const bioCharsLimit = 500;
 
@@ -103,7 +104,7 @@ function Profile() {
 
     return (
         <Fullscreen>
-            <main className="min-h-screen w-full sm:w-13/32 m-auto shadow-[0_0_1.5rem_rgb(0,0,0,0.09)] pt-8 px-8 pb-24 bg-white">
+            <Main className="pt-8 px-8 pb-24">
                 <header className="flex gap-2 items-center justify-center mb-10">
                     <img src="profile.svg" alt="profile icon" height="30px" width="30px" />
                     <h1 className="text-2xl">Profile</h1>
@@ -148,7 +149,7 @@ function Profile() {
                     {profileError && <p className="text-sm text-red-500">{profileError}</p>}
                     <button type="submit" disabled={loading} className="w-1/3 font-semi-bold mt-2 self-center cursor-pointer px-2 py-2.5 bg-blue-500 hover:bg-blue-400 transition text-blue-50 rounded-4xl">Save</button>
                 </form>
-            </main>
+            </Main>
             <NavBar />
             <Spinner loading={loading} />
         </Fullscreen>

@@ -8,6 +8,7 @@ import Badge from "../Badge";
 import Chat from "../Chat";
 import Fullscreen from "../Fullscreen";
 import Spinner from "../Spinner";
+import Main from "../Main";
 
 function Peer() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -45,7 +46,7 @@ function Peer() {
 
     return (
         <Fullscreen>
-            <main className="min-h-screen w-full sm:w-13/32 m-auto shadow-[0_0_1.5rem_rgb(0,0,0,0.09)] pt-8 px-6 sm:px-16 pb-24 bg-white">
+            <Main className="pt-8 px-6 sm:px-16 pb-24">
                 <header className="flex flex-col gap-2 items-center justify-center">
                     <LetterImage username={peer.username} variant="large" />
                     <div>@{peer.username}</div>
@@ -75,7 +76,7 @@ function Peer() {
                     </div>
                 </section>
                 <Chat peerId={peer.id} peerUsername={peer.username} />
-            </main>
+            </Main>
             <NavBar />
             <Spinner loading={loading} />
         </Fullscreen>

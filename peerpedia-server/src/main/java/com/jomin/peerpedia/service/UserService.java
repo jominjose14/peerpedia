@@ -30,19 +30,19 @@ public class UserService {
         return currentUserOptional.map(UserResponse::new);
     }
 
-    @Cacheable("users")
+    @Cacheable(value = "users", unless = "#result == null")
     public Optional<UserResponse> get(String username) {
         Optional<User> userOptional = userRepository.findByUsername(username);
         return userOptional.map(UserResponse::new);
     }
 
-    @Cacheable("users")
+    @Cacheable(value = "users", unless = "#result == null")
     public Optional<UserResponse> get(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         return userOptional.map(UserResponse::new);
     }
 
-    @Cacheable("users")
+    // @Cacheable(value = "users", key ="#id + '::row'", unless = "#result == null")
     public Optional<User> getRow(Long id) {
         return userRepository.findById(id);
     }
@@ -129,6 +129,7 @@ public class UserService {
 
         User user = currentUserOptional.get();
         user.update(updateUserRequest);
-        return Optional.of(new UserResponse(user));
+        User updatedUser = userRepository.save(user);
+        return Optional.of(new UserResponse(updatedUser));
     }
 }

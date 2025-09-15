@@ -4,13 +4,9 @@ import com.jomin.peerpedia.bean.RequestLocal;
 import com.jomin.peerpedia.data.entity.ChatMessage;
 import com.jomin.peerpedia.data.entity.User;
 import com.jomin.peerpedia.data.repository.ChatMessageRepository;
-import com.jomin.peerpedia.dto.ChatMessageRequest;
 import com.jomin.peerpedia.dto.ChatMessageResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

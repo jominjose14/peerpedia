@@ -21,8 +21,11 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${app.webclient-domain}")
-    private String webclientDomain;
+    @Value("${app.webclient-cors.enable}")
+    private boolean enableWebclientCors;
+
+    @Value("${app.webclient-cors.domain}")
+    private String webclientCorsDomain;
 
     private final JwtAuthFilter jwtAuthFilter;
 
@@ -39,14 +42,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(request -> {
-                    CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Arrays.asList(webclientDomain));
-                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    config.setAllowedHeaders(Arrays.asList("*"));
-                    config.setAllowCredentials(true);
-                    return config;
-                }))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // to handle browser preflight requests
@@ -55,6 +50,18 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+        if(enableWebclientCors) {
+            httpSecurity
+                    .cors(cors -> cors.configurationSource(request -> {
+                        CorsConfiguration config = new CorsConfiguration();
+                        config.setAllowedOrigins(Arrays.asList(webclientCorsDomain));
+                        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                        config.setAllowedHeaders(Arrays.asList("*"));
+                        config.setAllowCredentials(true);
+                        return config;
+                    }));
+        }
 
         return httpSecurity.build();
     }

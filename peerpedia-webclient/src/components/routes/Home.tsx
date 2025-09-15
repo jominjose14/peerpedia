@@ -6,6 +6,7 @@ import { getMostKnownSkills, getMostSaughtSkills, getUserCount } from "../../lib
 import { CountingNumber } from "../ui/shadcn-io/counting-number";
 import SkillChart from "../SkillChart";
 import type { PlottableSkill, PopularSkills } from "../../lib/types";
+import Main from "../Main";
 
 function Home() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -46,7 +47,7 @@ function Home() {
 
     return (
         <Fullscreen>
-            <main className="min-h-screen w-full sm:w-13/32 m-auto shadow-[0_0_1.5rem_rgb(0,0,0,0.09)] pt-8 px-6 sm:px-16 pb-24 bg-white">
+            <Main className="pt-8 px-6 sm:px-16 pb-24">
                 <header className="flex gap-2 items-center justify-center mb-8">
                     <img src="favicon.svg" alt="peerpedia icon" height="30px" width="30px" />
                     <h1 className="text-2xl">Peerpedia</h1>
@@ -87,7 +88,7 @@ function Home() {
                     <li>Database: PostgreSQL</li>
                     <li>Deployment: Docker, Render, Neon</li>
                 </ul>
-            </main>
+            </Main>
             <NavBar />
             <Spinner loading={loading} />
         </Fullscreen>
