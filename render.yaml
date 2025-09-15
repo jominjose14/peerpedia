@@ -1,0 +1,61 @@
+services:
+  - type: web
+    name: load-balancer
+    env: docker
+    dockerfilePath: ./peerpedia-load-balancer/Dockerfile
+    plan: starter
+    autoDeploy: false
+  
+  - type: private
+    name: webclient
+    env: docker
+    dockerfilePath: ./peerpedia-webclient/Dockerfile
+    plan: starter
+    autoDeploy: false
+  
+  - type: private
+    name: app-server-1
+    env: docker
+    dockerfilePath: ./peerpedia-server/Dockerfile
+    plan: starter
+    autoDeploy: false
+    envVars:
+      - key: DB_URL
+      - key: DB_USERNAME
+      - key: DB_PASSWORD
+      - key: REDIS_HOST
+      - key: REDIS_PORT
+      - key: REDIS_PASSWORD
+      - key: CACHE_TYPE
+      - key: ADMIN_PASSWORD
+      - key: JWT_SECRET
+      - key: ENABLE_WEBCLIENT_CORS
+      - key: WEBCLIENT_CORS_DOMAIN
+      - key: USER_INCLUDE_COUNT
+
+  - type: private
+    name: app-server-2
+    env: docker
+    dockerfilePath: ./peerpedia-server/Dockerfile
+    plan: starter
+    autoDeploy: false
+    envVars:
+      - key: DB_URL
+      - key: DB_USERNAME
+      - key: DB_PASSWORD
+      - key: REDIS_HOST
+      - key: REDIS_PORT
+      - key: REDIS_PASSWORD
+      - key: CACHE_TYPE
+      - key: ADMIN_PASSWORD
+      - key: JWT_SECRET
+      - key: ENABLE_WEBCLIENT_CORS
+      - key: WEBCLIENT_CORS_DOMAIN
+      - key: USER_INCLUDE_COUNT
+
+  - type: private
+    name: cache
+    env: docker
+    dockerfilePath: ./peerpedia-cache/Dockerfile
+    plan: starter
+    autoDeploy: false
