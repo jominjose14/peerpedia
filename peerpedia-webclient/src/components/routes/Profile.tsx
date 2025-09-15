@@ -123,7 +123,7 @@ function Profile() {
                             <MultiSelectTrigger className="w-full text-lg">
                                 <MultiSelectValue placeholder="Select skills you can teach" />
                             </MultiSelectTrigger>
-                            <MultiSelectContent className="text-lg">
+                            <MultiSelectContent className="text-md">
                                 {skills.map((skill, idx) => <MultiSelectItem key={idx} value={skill} className="text-md">{skill}</MultiSelectItem>)}
                             </MultiSelectContent>
                         </MultiSelect>
@@ -133,7 +133,7 @@ function Profile() {
                             <MultiSelectTrigger className="w-full text-lg">
                                 <MultiSelectValue placeholder="Select skills you can teach" />
                             </MultiSelectTrigger>
-                            <MultiSelectContent className="text-lg">
+                            <MultiSelectContent className="text-md">
                                 {skills.map((skill, idx) => <MultiSelectItem key={idx} value={skill} className="text-md">{skill}</MultiSelectItem>)}
                             </MultiSelectContent>
                         </MultiSelect>
