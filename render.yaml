@@ -1,23 +1,23 @@
 services:
   - type: web
     name: load-balancer
-    env: docker
+    runtime: docker
     dockerfilePath: ./peerpedia-load-balancer/Dockerfile
-    plan: starter
+    plan: free
     autoDeploy: false
   
-  - type: private
+  - type: web
     name: webclient
-    env: docker
+    runtime: docker
     dockerfilePath: ./peerpedia-webclient/Dockerfile
-    plan: starter
+    plan: free
     autoDeploy: false
   
-  - type: private
+  - type: web
     name: app-server-1
-    env: docker
+    runtime: docker
     dockerfilePath: ./peerpedia-server/Dockerfile
-    plan: starter
+    plan: free
     autoDeploy: false
     envVars:
       - key: DB_URL
@@ -33,11 +33,11 @@ services:
       - key: WEBCLIENT_CORS_DOMAIN
       - key: USER_INCLUDE_COUNT
 
-  - type: private
+  - type: web
     name: app-server-2
-    env: docker
+    runtime: docker
     dockerfilePath: ./peerpedia-server/Dockerfile
-    plan: starter
+    plan: free
     autoDeploy: false
     envVars:
       - key: DB_URL
@@ -53,9 +53,9 @@ services:
       - key: WEBCLIENT_CORS_DOMAIN
       - key: USER_INCLUDE_COUNT
 
-  - type: private
+  - type: web
     name: cache
-    env: docker
+    runtime: docker
     dockerfilePath: ./peerpedia-cache/Dockerfile
-    plan: starter
+    plan: free
     autoDeploy: false
