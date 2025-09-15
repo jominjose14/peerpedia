@@ -19,8 +19,8 @@ services:
     dockerfilePath: ./peerpedia-server/Dockerfile
     plan: free
     autoDeploy: false
-    envVarsFrom:
-      - name: app-server-env
+    envVars:
+      - fromGroup: app-server-env
 
   - type: web
     name: app-server-2
@@ -28,8 +28,8 @@ services:
     dockerfilePath: ./peerpedia-server/Dockerfile
     plan: free
     autoDeploy: false
-    envVarsFrom:
-      - name: app-server-env
+    envVars:
+      - fromGroup: app-server-env
 
   - type: web
     name: cache
