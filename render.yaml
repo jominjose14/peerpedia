@@ -20,18 +20,7 @@ services:
     plan: free
     autoDeploy: false
     envVars:
-      - key: DB_URL
-      - key: DB_USERNAME
-      - key: DB_PASSWORD
-      - key: REDIS_HOST
-      - key: REDIS_PORT
-      - key: REDIS_PASSWORD
-      - key: CACHE_TYPE
-      - key: ADMIN_PASSWORD
-      - key: JWT_SECRET
-      - key: ENABLE_WEBCLIENT_CORS
-      - key: WEBCLIENT_CORS_DOMAIN
-      - key: USER_INCLUDE_COUNT
+      - fromGroup: app-server-env
 
   - type: web
     name: app-server-2
@@ -39,6 +28,18 @@ services:
     dockerfilePath: ./peerpedia-server/Dockerfile
     plan: free
     autoDeploy: false
+    envVars:
+      - fromGroup: app-server-env
+
+  - type: web
+    name: cache
+    runtime: docker
+    dockerfilePath: ./peerpedia-cache/Dockerfile
+    plan: free
+    autoDeploy: false
+
+envVarGroups:
+  - name: app-server-env
     envVars:
       - key: DB_URL
       - key: DB_USERNAME
@@ -52,10 +53,3 @@ services:
       - key: ENABLE_WEBCLIENT_CORS
       - key: WEBCLIENT_CORS_DOMAIN
       - key: USER_INCLUDE_COUNT
-
-  - type: web
-    name: cache
-    runtime: docker
-    dockerfilePath: ./peerpedia-cache/Dockerfile
-    plan: free
-    autoDeploy: false
