@@ -5,6 +5,7 @@ import ProtectedRoute from './components/routes/ProtectedRoute'
 import { Toaster } from 'sonner'
 import React, { Suspense } from 'react'
 import Spinner from './components/Spinner'
+import ScrollToTop from './components/ScrollToTop'
 
 const Home = React.lazy(() => import('./components/routes/Home'));
 const Teach = React.lazy(() => import('./components/routes/Teach'));
@@ -17,6 +18,7 @@ const Peer = React.lazy(() => import('./components/routes/Peer'));
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={
           <ProtectedRoute>

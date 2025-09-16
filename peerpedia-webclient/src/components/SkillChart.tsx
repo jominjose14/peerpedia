@@ -7,21 +7,24 @@ interface SkillChartProps {
 }
 
 function SkillChart({ data }: SkillChartProps) {
+    const chartData = [...data];
+    chartData.sort((item1, item2) => item2.count - item1.count);
+
     let minCount = 9_999_999_999;
     let maxCount = 0;
-    for (const dataPoint of data) {
-        minCount = Math.min(minCount, dataPoint.count);
-        maxCount = Math.max(maxCount, dataPoint.count);
+    for (const item of chartData) {
+        minCount = Math.min(minCount, item.count);
+        maxCount = Math.max(maxCount, item.count);
     }
 
     const xMin = Math.trunc(0.975 * minCount);
     const xMax = Math.trunc(1.01 * maxCount);
 
-    if (1 <= data.length) data[0].fill = "oklch(70% 0.214 259.815)";
-    if (2 <= data.length) data[1].fill = "oklch(65% 0.214 259.815)";
-    if (3 <= data.length) data[2].fill = "oklch(60% 0.214 259.815)";
-    if (4 <= data.length) data[3].fill = "oklch(55% 0.214 259.815)";
-    if (5 <= data.length) data[4].fill = "oklch(50% 0.214 259.815)";
+    if (1 <= chartData.length) chartData[0].fill = "oklch(66% 0.214 259.815)";
+    if (2 <= chartData.length) chartData[1].fill = "oklch(62% 0.214 259.815)";
+    if (3 <= chartData.length) chartData[2].fill = "oklch(58% 0.214 259.815)";
+    if (4 <= chartData.length) chartData[3].fill = "oklch(54% 0.214 259.815)";
+    if (5 <= chartData.length) chartData[4].fill = "oklch(52% 0.214 259.815)";
 
     const chartConfig = {
         count: {
@@ -32,7 +35,7 @@ function SkillChart({ data }: SkillChartProps) {
 
     return (
         <ChartContainer config={chartConfig} className="min-h-[15rem] sm:min-h-[20rem] w-full sm:w-13/16 mx-auto">
-            <BarChart accessibilityLayer data={data} layout="vertical">
+            <BarChart accessibilityLayer data={chartData} layout="vertical">
                 <CartesianGrid horizontal={false} />
                 <XAxis
                     type="number"

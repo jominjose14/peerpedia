@@ -51,12 +51,17 @@ public class UserService {
         return Optional.ofNullable(requestLocal.getCurrentUser());
     }
 
-    public Optional<List<UserResponse>> getPeers(Long startId, Long endId) {
+    public Optional<List<UserResponse>> getPeers(String username, List<String> teachSkills, List<String> learnSkills, int count) {
         Optional<User> currentUserOptional = Optional.ofNullable(requestLocal.getCurrentUser());
         if(currentUserOptional.isEmpty()) return Optional.empty();
 
         User currentUser = currentUserOptional.get();
-        List<User> rows = userRepository.findTop10ByIdBetweenAndIdNotOrderByIdDesc(startId, endId, currentUser.getId());
+        username = "%" + username + "%";
+        String teachSkillsArray = "";
+        if(teachSkills != null && !teachSkills.isEmpty()) teachSkillsArray = "{" + String.join(",", teachSkills) + "}";
+        String learnSkillsArray = "";
+        if(learnSkills != null && !learnSkills.isEmpty()) learnSkillsArray = "{" + String.join(",", learnSkills) + "}";
+        List<User> rows = userRepository.findPeersByUsernameAndTeachSkillsAndLearnSkills(username, currentUser.getId(), teachSkillsArray, learnSkillsArray, count);
 
         List<UserResponse> userResponses = new ArrayList<>(rows.size());
         for(var row : rows) {
@@ -106,6 +111,21 @@ public class UserService {
         String teachSkillsArray = "{" + String.join(",", currentUser.getTeachSkills()) + "}";
         String learnSkillsArray = "{" + String.join(",", currentUser.getLearnSkills()) + "}";
         List<User> rows = userRepository.findTop10MatchedPeers(startId, endId, currentUser.getId(), teachSkillsArray, learnSkillsArray);
+
+        List<UserResponse> userResponses = new ArrayList<>(rows.size());
+        for(var row : rows) {
+            userResponses.add(new UserResponse(row));
+        }
+
+        return Optional.of(userResponses);
+    }
+
+    public Optional<List<UserResponse>> getContacts(Long startId, Long endId) {
+        Optional<User> currentUserOptional = Optional.ofNullable(requestLocal.getCurrentUser());
+        if(currentUserOptional.isEmpty()) return Optional.empty();
+
+        User currentUser = currentUserOptional.get();
+        List<User> rows = userRepository.find10Contacts(startId, endId, currentUser.getId());
 
         List<UserResponse> userResponses = new ArrayList<>(rows.size());
         for(var row : rows) {

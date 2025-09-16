@@ -61,7 +61,7 @@ function Home() {
                     <h2 className={h2Style}>Get started</h2>
                     <ul className="mt-3 pl-11 pr-4 pt-4 pb-5 rounded-lg border list-disc list-outside space-y-1">
                         <li>Click on Profile tab <img className="inline" src="profile.svg" alt="profile icon" height={iconSize} width={iconSize} /> from the bottom nav bar</li>
-                        <li>Provide your email and skills. Then,</li>
+                        <li>Select skills you want to teach and learn. Your Peerpedia experience is shaped by this step</li>
                         <li>Click on Matchmaking tab <img className="inline" src="matchmaking.svg" alt="matchmaking icon" height={iconSize} width={iconSize} /> for algorithmic matchmaking with peers who can learn from each other</li>
                         <li>Click on Teach tab <img className="inline" src="teach.svg" alt="teach icon" height={iconSize} width={iconSize} /> to find peers to teach</li>
                         <li>Click on Learn tab <img className="inline" src="learn.svg" alt="learn icon" height={iconSize} width={iconSize} /> to find peers to learn from</li>

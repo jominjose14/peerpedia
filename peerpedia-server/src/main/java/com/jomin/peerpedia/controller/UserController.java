@@ -6,9 +6,7 @@ import com.jomin.peerpedia.dto.UserResponse;
 import com.jomin.peerpedia.service.SkillService;
 import com.jomin.peerpedia.service.StatsService;
 import com.jomin.peerpedia.service.UserService;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -97,10 +95,10 @@ public class UserController {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/all", params = {"start", "end"})
-    public ResponseEntity<Map<String,Object>> getPeers(@RequestParam("start") @NotNull @Min(1) @Max(1000000) Long startId, @RequestParam("end") @NotNull @Min(1) @Max(1000000) Long endId) {
+    @GetMapping(value = "/explore", params = {"username", "teach", "learn", "count"})
+    public ResponseEntity<Map<String,Object>> getPeers(@RequestParam("username") @NotNull @Size(min=0, max=32) String username, @RequestParam("teach") @NotNull @Size(min=0, max=10) List<String> teachSkills, @RequestParam("learn") @NotNull @Size(min=0, max=10) List<String> learnSkills, @RequestParam("count") @NotNull @Min(1) @Max(100) int count) {
         Map<String,Object> responseBody = new LinkedHashMap<>();
-        Optional<List<UserResponse>> userResponsesOptional = userService.getPeers(startId, endId);
+        Optional<List<UserResponse>> userResponsesOptional = userService.getPeers(username, teachSkills, learnSkills, count);
         if(userResponsesOptional.isEmpty()) {
             responseBody.put("success", false);
             responseBody.put("message", "Failed to fetch peers");
@@ -157,6 +155,22 @@ public class UserController {
 
         responseBody.put("success", true);
         responseBody.put("message", "Fetched matched peers");
+        responseBody.put("payload", userResponsesOptional.get());
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/contacts", params = {"start", "end"})
+    public ResponseEntity<Map<String,Object>> getContacts(@RequestParam("start") @NotNull @Min(1) @Max(1000000) Long startId, @RequestParam("end") @NotNull @Min(1) @Max(1000000) Long endId) {
+        Map<String,Object> responseBody = new LinkedHashMap<>();
+        Optional<List<UserResponse>> userResponsesOptional = userService.getContacts(startId, endId);
+        if(userResponsesOptional.isEmpty()) {
+            responseBody.put("success", false);
+            responseBody.put("message", "Failed to fetch contacts");
+            return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        responseBody.put("success", true);
+        responseBody.put("message", "Fetched contacts");
         responseBody.put("payload", userResponsesOptional.get());
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }

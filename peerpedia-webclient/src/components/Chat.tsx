@@ -3,6 +3,7 @@ import type { ChatMessage } from "../lib/types";
 import { getChatHistory, postChatMessage, type PostChatMessageResponse } from "../lib/requests";
 import { toast } from "sonner";
 import ChatMessageTile from "./ChatMessageTile";
+import Button from "./Button";
 
 interface ChatProps {
     peerId: number,
@@ -69,14 +70,16 @@ function Chat({ peerId, peerUsername }: ChatProps) {
     }
 
     return (
-        <section className="mt-8">
-            <div className="text-xl text-center text-blue-500 font-bold">Chat</div>
-            <div ref={chatBox} className="h-120 overflow-y-auto rounded-md border p-4 mt-4 space-y-2">
+        <section className="my-8">
+            <div className="text-xl sm:text-2xl text-center text-blue-500 font-bold">Chat</div>
+            <div ref={chatBox} className="h-140 overflow-y-auto rounded-md border p-5 mt-4 space-y-3">
                 {messages.length === 0 ? <p className="text-center text-gray-400"> - No messages yet - </p> : messages.map(message => <ChatMessageTile key={message.id} chatMessage={message} peerId={peerId} peerUsername={peerUsername} />)}
             </div>
-            <form onSubmit={onFormSubmit} className="mt-2">
+            <form onSubmit={onFormSubmit} className="mt-2 flex gap-2">
                 <input type="text" name="chat-message" id="chat-message" value={curMessage} onChange={e => setCurMessage(e.target.value)} placeholder="Type a message" className="w-full rounded-md border px-4 py-2 outline-blue-500" />
-                <button type="submit" disabled={loading} className="w-1/3 sm:w-1/4 font-semi-bold mt-2 block mx-auto cursor-pointer px-2 py-2.5 bg-blue-500 hover:bg-blue-400 transition text-blue-50 rounded-4xl">Send</button>
+                <Button type="submit" disabled={loading} className={`p-2.5 ${loading ? "pl-2.5" : "pl-3.5"}`}>
+                    <img src={loading ? "spinner.svg" : "send.svg"} alt="send" height="25px" width="25px" className="filter brightness-0 invert-100" />
+                </Button>
             </form>
         </section>
     );

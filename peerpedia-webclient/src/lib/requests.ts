@@ -115,9 +115,9 @@ export async function postUser(email: string, teachSkills: string[], learnSkills
     }
 }
 
-export async function getPeers(startId: number, endId: number): Promise<User[] | null> {
+export async function getPeers(username: string, teachSkills: string[], learnSkills: string[], count: number): Promise<User[] | null> {
     try {
-        const res = await fetch(`${API_URL}/users/all?start=${startId}&end=${endId}`, {
+        const res = await fetch(`${API_URL}/users/explore?username=${username}&teach=${teachSkills.join(",")}&learn=${learnSkills.join(",")}&count=${count}`, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('jwt')}`,
             }
@@ -175,6 +175,22 @@ export async function getPeersToLearnFrom(startId: number, endId: number): Promi
         return json.payload;
     } catch (err) {
         console.error("Failed to fetch peers", err);
+        return null;
+    }
+}
+
+export async function getContacts(startId: number, endId: number): Promise<User[] | null> {
+    try {
+        const res = await fetch(`${API_URL}/users/contacts?start=${startId}&end=${endId}`, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('jwt')}`,
+            }
+        });
+        if (!res.ok) throw new Error("Request failed");
+        const json: { success: boolean, message: string, payload: User[] } = await res.json();
+        return json.payload;
+    } catch (err) {
+        console.error("Failed to fetch contacts", err);
         return null;
     }
 }

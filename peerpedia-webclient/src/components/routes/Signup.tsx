@@ -49,7 +49,7 @@ function Signup() {
                     <img src="favicon.svg" alt="peerpedia icon" height="30px" width="30px" />
                     <h1 className="text-2xl">Signup</h1>
                 </div>
-                <input type="text" name="username" id="signup-username" placeholder="Username" required value={username} onChange={(e) => setUsername(e.target.value)} className="border-[1px] border-gray-200 outline-blue-500 px-3 py-1.5" />
+                <input type="text" name="username" id="signup-username" spellCheck="false" placeholder="Username" required value={username} onChange={(e) => setUsername(e.target.value)} className="border-[1px] border-gray-200 outline-blue-500 px-3 py-1.5" />
                 <input type="password" name="password" id="signup-password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)} className="border-[1px] border-gray-200 outline-blue-500 px-3 py-1.5" />
                 <input type="password" name="confirm-password" id="signup-confirm-password" placeholder="Confirm Password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="border-[1px] border-gray-200 outline-blue-500 px-3 py-1.5" />
                 {signupError && <p className="text-sm text-red-500 text-center">{signupError}</p>}

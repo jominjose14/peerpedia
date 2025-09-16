@@ -3,7 +3,7 @@ import NavBar from "../NavBar";
 import { emailRegex } from "../../lib/constants";
 import { MultiSelect, MultiSelectContent, MultiSelectItem, MultiSelectTrigger, MultiSelectValue } from "../ui/multi-select";
 import { doesIntersect, extractUsernameFromToken } from "../../lib/utils";
-import { getAllSkills, getCurrentUser, postUser } from "../../lib/requests";
+import { getAllSkills, getContacts, getCurrentUser, postUser } from "../../lib/requests";
 import type { User } from "../../lib/types";
 import { toast } from "sonner";
 import LetterImage from "../LetterImage";
@@ -13,12 +13,17 @@ import Spinner from "../Spinner";
 import Main from "../Main";
 import Page from "../Page";
 import Header from "../Header";
+import Button from "../Button";
+import Separator from "../Separator";
+import PeerCard from "../PeerCard";
+import Intro from "../Intro";
 
 const bioCharsLimit = 500;
 
 function Profile() {
     const [loading, setLoading] = useState<boolean>(false);
     const [skills, setSkills] = useState<string[]>([]);
+    const [contacts, setContacts] = useState<User[]>([]);
     const [email, setEmail] = useState<string>('');
     const [teachSkills, setTeachSkills] = useState<string[]>([]);
     const [learnSkills, setLearnSkills] = useState<string[]>([]);
@@ -36,6 +41,7 @@ function Profile() {
     async function init() {
         await loadCurUser();
         await loadSkills();
+        await loadContacts();
     }
 
     async function loadCurUser() {
@@ -65,30 +71,50 @@ function Profile() {
         setLoading(false);
     }
 
+    async function loadContacts() {
+        setLoading(true);
+        const fetchedContacts: User[] | null = await getContacts(1, 999_999);
+        if (fetchedContacts === null) {
+            setLoading(false);
+            return;
+        }
+
+        // setContacts(contacts => [...contacts, ...fetchedContacts]);
+        setContacts(fetchedContacts);
+        setLoading(false);
+    }
+
     async function onFormSubmit(event: FormEvent) {
         event.preventDefault();
+        setLoading(true);
 
         // form validation
         if (email !== "" && !emailRegex.test(email)) {
             setProfileError('Invalid email');
+            setLoading(false);
             return;
         } else if (10 < teachSkills.length) {
             setProfileError('You cannot choose more than 10 skills to teach');
+            setLoading(false);
             return;
         } else if (10 < learnSkills.length) {
             setProfileError('You cannot choose more than 10 skills to learn');
+            setLoading(false);
             return;
         } else if (doesIntersect(teachSkills, learnSkills)) {
             setProfileError('You cannot teach and learn the same skill');
+            setLoading(false);
             return;
         } else if (500 < bio.length) {
             setProfileError('Bio must be less than 500 characters long');
+            setLoading(false);
             return;
         }
 
         const message: string = await postUser(email, teachSkills, learnSkills, bio);
         toast(message);
         setProfileError('');
+        setLoading(false);
     }
 
     function logout() {
@@ -131,7 +157,7 @@ function Profile() {
                         <label htmlFor="profile-learn" className="mt-3 text-blue-500 font-semibold">I want to learn</label>
                         <MultiSelect values={learnSkills} onValuesChange={setLearnSkills}>
                             <MultiSelectTrigger className="w-full text-lg">
-                                <MultiSelectValue placeholder="Select skills you can teach" />
+                                <MultiSelectValue placeholder="Select skills you want to learn" />
                             </MultiSelectTrigger>
                             <MultiSelectContent className="text-md">
                                 {skills.map((skill, idx) => <MultiSelectItem key={idx} value={skill} className="text-md">{skill}</MultiSelectItem>)}
@@ -146,9 +172,15 @@ function Profile() {
                             </div>
                         </div>
 
-                        {profileError && <p className="text-sm text-red-500">{profileError}</p>}
-                        <button type="submit" disabled={loading} className="w-1/3 sm:w-1/4 font-semi-bold mt-2 self-center cursor-pointer px-2 py-2.5 bg-blue-500 hover:bg-blue-400 transition text-blue-50 rounded-4xl">Save</button>
+                        {profileError && <p className="text-red-500 text-center my-4">{profileError}</p>}
+                        <Button type="submit" disabled={loading} className="w-1/3 sm:w-1/4 mt-2 self-center">Save</Button>
                     </form>
+                    <Separator className="mt-14 mb-12" />
+                    <div className="text-xl sm:text-3xl text-center text-blue-500 font-bold mb-4">Contacts</div>
+                    <Intro text="Resume your chat with peers" />
+                    <div className="p-4 flex flex-col gap-4">
+                        {contacts.map(contact => <PeerCard key={contact.id} peer={contact} />)}
+                    </div>
                 </Main>
             </Page>
             <NavBar />

@@ -24,7 +24,7 @@ function PeerCard({ peer }: PeerCardProps) {
                         </div>
                         <div className="text-sm line-clamp-5">{peer.bio ? peer.bio : "-"}</div>
                     </div>
-                    <div className="flex flex-col gap-2">
+                    {/* <div className="flex flex-col gap-2">
                         <div className="flex gap-1 items-center flex-wrap">
                             <div className="text-sm mr-1 w-full">I can Teach: </div>
                             {peer.teachSkills ? peer.teachSkills.slice(0, 5).map((skill, idx) => <Badge key={idx} text={skill} variant="small" />) : "-"}
@@ -33,7 +33,7 @@ function PeerCard({ peer }: PeerCardProps) {
                             <div className="text-sm mr-1 w-full">I want to Learn: </div>
                             {peer.learnSkills ? peer.learnSkills.slice(0, 5).map((skill, idx) => <Badge key={idx} text={skill} variant="small" />) : "-"}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </Link>
         );

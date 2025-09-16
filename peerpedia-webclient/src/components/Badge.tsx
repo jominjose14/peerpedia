@@ -4,10 +4,10 @@ interface BadgeProps {
 }
 
 function Badge({ text, variant }: BadgeProps) {
-    let styles = "inline border shadow-sm rounded-sm";
+    let styles = "inline border border-gray-300 rounded-sm leading-none pb-1.5";
     const smallVariantStyles = "text-[0.8rem]/[1] px-1.5 py-1";
     const largeVariantStyles = "text-[0.9rem]/[1] px-2 py-1.5";
-    const xlVariantStyles = "text-[1.1rem]/[1] px-2 py-1.5";
+    const xlVariantStyles = "text-sm sm:text-[1.1rem]/[1] px-1.5 py-1 sm:px-2 sm:py-1.5";
 
     if (variant === "small") {
         styles += " " + smallVariantStyles;

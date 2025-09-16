@@ -18,6 +18,7 @@ function Peer() {
     const [peer, setPeer] = useState<User>({ id: 0, username: 'loading', email: 'loading', teachSkills: ['loading'], learnSkills: ['loading'], bio: 'loading' });
 
     const idStr = searchParams.get("id");
+    const lastActiveBeforeInHours = Math.trunc(1 + Math.random() * 10);
 
     useEffect(() => {
         init();
@@ -54,8 +55,10 @@ function Peer() {
                     <header className="flex flex-col gap-2 items-center justify-center mt-3">
                         <LetterImage username={peer.username} variant="large" />
                         <div>@{peer.username}</div>
+                        {/* TODO: dynamically update last active */}
+                        <div className="text-[1rem]/[1.3] font-light">Last active {lastActiveBeforeInHours} {lastActiveBeforeInHours === 1 ? "hour" : "hours"} ago</div>
                     </header>
-                    <section className="space-y-4 mt-8">
+                    <section className="space-y-4 mt-10">
                         {/* <div className="space-y-2 mt-2">
                         <div className="text-blue-500 font-semibold">Email</div>
                         <div className="px-2 py-1 border">{peer.email}</div>

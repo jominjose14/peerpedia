@@ -2,6 +2,7 @@ services:
   - type: web
     name: load-balancer
     runtime: docker
+    dockerContext: ./peerpedia-load-balancer
     dockerfilePath: ./peerpedia-load-balancer/Dockerfile
     plan: free
     autoDeploy: false
@@ -9,6 +10,7 @@ services:
   - type: web
     name: webclient
     runtime: docker
+    dockerContext: ./peerpedia-webclient
     dockerfilePath: ./peerpedia-webclient/Dockerfile
     plan: free
     autoDeploy: false
@@ -16,6 +18,7 @@ services:
   - type: web
     name: app-server-1
     runtime: docker
+    dockerContext: ./peerpedia-server
     dockerfilePath: ./peerpedia-server/Dockerfile
     plan: free
     autoDeploy: false
@@ -25,6 +28,7 @@ services:
   - type: web
     name: app-server-2
     runtime: docker
+    dockerContext: ./peerpedia-server
     dockerfilePath: ./peerpedia-server/Dockerfile
     plan: free
     autoDeploy: false
@@ -34,6 +38,7 @@ services:
   - type: web
     name: cache
     runtime: docker
+    dockerContext: ./peerpedia-cache
     dockerfilePath: ./peerpedia-cache/Dockerfile
     plan: free
     autoDeploy: false

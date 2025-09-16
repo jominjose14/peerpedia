@@ -49,7 +49,7 @@ function Matchmaking() {
             <Page>
                 <Header iconSrc="matchmaking.svg" iconStyles="pt-1 scale-105" text="Matchmaking" />
                 <Main>
-                    <Intro text="Connect with peers matching your requirements" />
+                    <Intro text="Connect with peers exactly matching your requirements" />
                     <div className="p-4 flex flex-col gap-4">
                         {peers.length === 0 ? <p className="text-center text-gray-500"> - No matches - </p> : peers.map(peer => <PeerCard key={peer.id} peer={peer} />)}
                     </div>

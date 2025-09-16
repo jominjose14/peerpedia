@@ -1,4 +1,4 @@
-# Node.js specific
+# Node.js
 node_modules/
 npm-debug.log
 yarn-debug.log
@@ -6,17 +6,17 @@ yarn-error.log
 .pnp.*
 .npm/
 
-# TypeScript specific
+# TypeScript
 *.tsbuildinfo
 
 # Build outputs
-# dist/
+dist/
 build/
 out/
 
-# React specific
-.env
-.env.*
+# React
+#.env
+#.env.*
 .next/ # If using Next.js
 .cache/ # If using Create React App or similar build tools
 
@@ -25,7 +25,12 @@ out/
 .gitignore
 .gitattributes
 
-# Editor/IDE specific
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Editor/IDE
 .vscode/
 .idea/
 *.swp
@@ -33,6 +38,6 @@ out/
 *~
 *.log
 
-# Operating System specific
+# OS
 .DS_Store
 Thumbs.db
