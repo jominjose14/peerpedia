@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: load-balancer
+    name: peerpedia
     runtime: docker
     dockerContext: ./peerpedia-load-balancer
     dockerfilePath: ./peerpedia-load-balancer/Dockerfile
