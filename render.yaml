@@ -17,10 +17,10 @@ services:
     plan: free
     autoDeployTrigger: off
     envVars:
-      - fromGroup: app-server-env
+      - fromGroup: peerpedia-app-server-env
 
 envVarGroups:
-  - name: app-server-env
+  - name: peerpedia-app-server-env
     envVars:
       - key: DB_URL
         sync: false
