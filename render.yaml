@@ -5,7 +5,7 @@ services:
     dockerContext: ./peerpedia-load-balancer
     dockerfilePath: ./peerpedia-load-balancer/Dockerfile
     plan: free
-    autoDeploy: false
+    autoDeployTrigger: off
   
   - type: web
     name: webclient
@@ -13,7 +13,7 @@ services:
     dockerContext: ./peerpedia-webclient
     dockerfilePath: ./peerpedia-webclient/Dockerfile
     plan: free
-    autoDeploy: false
+    autoDeployTrigger: off
   
   - type: web
     name: app-server-1
@@ -21,7 +21,7 @@ services:
     dockerContext: ./peerpedia-server
     dockerfilePath: ./peerpedia-server/Dockerfile
     plan: free
-    autoDeploy: false
+    autoDeployTrigger: off
     envVars:
       - fromGroup: app-server-env
 
@@ -31,7 +31,7 @@ services:
     dockerContext: ./peerpedia-server
     dockerfilePath: ./peerpedia-server/Dockerfile
     plan: free
-    autoDeploy: false
+    autoDeployTrigger: off
     envVars:
       - fromGroup: app-server-env
 
@@ -41,7 +41,7 @@ services:
     dockerContext: ./peerpedia-cache
     dockerfilePath: ./peerpedia-cache/Dockerfile
     plan: free
-    autoDeploy: false
+    autoDeployTrigger: off
 
 envVarGroups:
   - name: app-server-env
