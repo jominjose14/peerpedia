@@ -24,21 +24,11 @@ services:
     autoDeployTrigger: off
     envVars:
       - fromGroup: app-server-env
-      - key: REDIS_HOST
+      - key: REDIS_URL
         fromService:
           name: cache
           type: keyvalue
-          property: host
-      - key: REDIS_PORT
-        fromService:
-          name: cache
-          type: keyvalue
-          property: port
-      - key: REDIS_PASSWORD
-        fromService:
-          name: cache
-          type: keyvalue
-          property: password
+          property: connectionString
 
   - type: web
     name: app-server-2
@@ -49,21 +39,11 @@ services:
     autoDeployTrigger: off
     envVars:
       - fromGroup: app-server-env
-      - key: REDIS_HOST
+      - key: REDIS_URL
         fromService:
           name: cache
           type: keyvalue
-          property: host
-      - key: REDIS_PORT
-        fromService:
-          name: cache
-          type: keyvalue
-          property: port
-      - key: REDIS_PASSWORD
-        fromService:
-          name: cache
-          type: keyvalue
-          property: password
+          property: connectionString
 
   - type: keyvalue
     name: cache

@@ -13,9 +13,7 @@ spring:
       connection-timeout: 30000 # 30 sec = 30 * 1000
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
-      password: ${REDIS_PASSWORD}
+      url: ${REDIS_URL}
   cache:
     type: ${CACHE_TYPE}
   jpa:
