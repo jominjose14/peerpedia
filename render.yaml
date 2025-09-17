@@ -43,6 +43,14 @@ services:
     plan: free
     autoDeployTrigger: off
 
+  - type: keyvalue
+    name: cache
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: everywhere
+
 envVarGroups:
   - name: app-server-env
     envVars:
@@ -53,11 +61,20 @@ envVarGroups:
       - key: DB_PASSWORD
         sync: false
       - key: REDIS_HOST
-        sync: false
+        fromService:
+          name: cache
+          type: keyvalue
+          property: host
       - key: REDIS_PORT
-        sync: false
+        fromService:
+          name: cache
+          type: keyvalue
+          property: port
       - key: REDIS_PASSWORD
-        sync: false
+        fromService:
+          name: cache
+          type: keyvalue
+          property: password
       - key: CACHE_TYPE
         sync: false
       - key: ADMIN_PASSWORD
