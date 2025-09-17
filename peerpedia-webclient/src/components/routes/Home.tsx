@@ -47,7 +47,7 @@ function Home() {
         setLoading(false);
     }
 
-    const h2Style = "text-blue-500 font-bold text-lg sm:text-xl mt-12";
+    const h2Style = "text-blue-500 font-bold text-[1.05rem]/[1.5] sm:text-xl mt-12";
     const iconSize = "25px";
 
     return (

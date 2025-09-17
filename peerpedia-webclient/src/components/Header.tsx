@@ -8,7 +8,7 @@ interface HeaderProps {
 }
 
 function Header({ className = "", iconSrc, iconStyles = "", text }: HeaderProps) {
-    const baseHeaderStyles = "flex gap-4 items-center justify-center bg-gradient-to-r from-blue-700 to-blue-500 pt-5 pb-7";
+    const baseHeaderStyles = "flex gap-4 items-center justify-center bg-gradient-to-r from-blue-700 to-blue-500 pt-4 pb-5 sm:pt-4.5 sm:pb-5.5";
     const mergedHeaderStyles = cn(baseHeaderStyles, className);
 
     const baseIconStyles = "filter brightness-0 invert-100";

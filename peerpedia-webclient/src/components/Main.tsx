@@ -7,7 +7,7 @@ interface MainProps {
 }
 
 function Main({ className = "", children }: MainProps) {
-    const baseStyles = "min-h-screen bg-white border-x-[1px] border-gray-100 shadow-[0_0_2rem_rgb(0,0,0,0.1)] text-md sm:text-lg text-gray-800 p-6 px-1 sm:px-8 pb-24";
+    const baseStyles = "min-h-dvh bg-white border-x-[1px] border-gray-100 shadow-[0_0_2rem_rgb(0,0,0,0.1)] text-[0.9rem]/[1.4] sm:text-lg text-gray-800 p-6 px-1 sm:px-8 pb-24";
     const mergedStyles = cn(baseStyles, className);
 
     return (

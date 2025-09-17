@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 function NavBar() {
-    const anchorStyle = "p-3 bg-white rounded-sm border border-gray-300 group hover:bg-gradient-to-tr hover:from-blue-400 hover:via-blue-500 hover:to-blue-600";
+    const anchorStyle = "p-3 py-2.5 sm:py-2.75 bg-white rounded-sm border border-gray-300 group hover:bg-gradient-to-tr hover:from-blue-400 hover:via-blue-500 hover:to-blue-600";
     const imgStyle = "size-[9vw] sm:size-[2.25vw] group-hover:filter group-hover:brightness-0 group-hover:invert-100";
 
     return (

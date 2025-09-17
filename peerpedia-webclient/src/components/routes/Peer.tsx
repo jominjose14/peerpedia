@@ -56,7 +56,7 @@ function Peer() {
                         <LetterImage username={peer.username} variant="large" />
                         <div>@{peer.username}</div>
                         {/* TODO: dynamically update last active */}
-                        <div className="text-[1rem]/[1.3] font-light">Last active {lastActiveBeforeInHours} {lastActiveBeforeInHours === 1 ? "hour" : "hours"} ago</div>
+                        <div className="text-gray-600 sm:text-gray-700 text-[0.75rem]/[1] sm:text-[1rem]/[1.3] font-light">Last active {lastActiveBeforeInHours} {lastActiveBeforeInHours === 1 ? "hour" : "hours"} ago</div>
                     </header>
                     <section className="space-y-4 mt-10">
                         {/* <div className="space-y-2 mt-2">
@@ -64,19 +64,19 @@ function Peer() {
                         <div className="px-2 py-1 border">{peer.email}</div>
                         </div> */}
                         <div className="space-y-2">
-                            <div className="text-blue-500 font-semibold">Bio</div>
+                            <div className="text-blue-500 font-bold sm:font-semibold">Bio</div>
                             <div className="px-5 py-3 pb-4 rounded-md border text-gray-800 justify">
                                 {peer.bio}
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <div className="text-blue-500 font-semibold">I can teach</div>
+                            <div className="text-blue-500 font-bold sm:font-semibold">I can teach</div>
                             <div className="flex gap-1 items-center flex-wrap">
                                 {peer.teachSkills.map((skill, idx) => <Badge key={idx} text={skill} variant="xl" />)}
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <div className="text-blue-500 font-semibold">I want to learn</div>
+                            <div className="text-blue-500 font-bold sm:font-semibold">I want to learn</div>
                             <div className="flex gap-1 items-center flex-wrap">
                                 {peer.learnSkills.map((skill, idx) => <Badge key={idx} text={skill} variant="xl" />)}
                             </div>

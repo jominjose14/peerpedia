@@ -138,13 +138,13 @@ function Profile() {
                     <div className="flex items-center justify-center gap-2 px-0 sm:px-16 mt-5 mb-12">
                         <LetterImage username={username} variant="small" />
                         <div>Logged in as <span className="text-blue-500 font-semibold">{username}</span></div>
-                        <button onClick={logout} className="text-center ml-auto cursor-pointer text-blue-500 font-semibold rounded-sm px-2 pt-1 pb-1.5 hover:bg-blue-50 transition">Logout</button>
+                        <button onClick={logout} className="text-center ml-auto cursor-pointer text-blue-500 font-semibold rounded-md border-1 sm:border-2 border-blue-100 px-2.75 py-1 hover:bg-blue-50 transition">Logout</button>
                     </div>
                     <form className="flex flex-col gap-1 px-0 sm:px-16" onSubmit={onFormSubmit}>
-                        <label htmlFor="profile-email" className="text-blue-500 font-semibold">Email</label>
+                        <label htmlFor="profile-email" className="text-blue-500 font-bold sm:font-semibold">Email</label>
                         <input type="text" name="email" id="profile-email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-md border focus:border-blue-500 outline-none px-3 py-1.5" />
 
-                        <label htmlFor="profile-teach" className="mt-3 text-blue-500 font-semibold">I can teach</label>
+                        <label htmlFor="profile-teach" className="mt-3 text-blue-500 font-bold sm:font-semibold">I can teach</label>
                         <MultiSelect values={teachSkills} onValuesChange={setTeachSkills} >
                             <MultiSelectTrigger className="w-full text-lg">
                                 <MultiSelectValue placeholder="Select skills you can teach" />
@@ -154,7 +154,7 @@ function Profile() {
                             </MultiSelectContent>
                         </MultiSelect>
 
-                        <label htmlFor="profile-learn" className="mt-3 text-blue-500 font-semibold">I want to learn</label>
+                        <label htmlFor="profile-learn" className="mt-3 text-blue-500 font-bold sm:font-semibold">I want to learn</label>
                         <MultiSelect values={learnSkills} onValuesChange={setLearnSkills}>
                             <MultiSelectTrigger className="w-full text-lg">
                                 <MultiSelectValue placeholder="Select skills you want to learn" />
@@ -164,7 +164,7 @@ function Profile() {
                             </MultiSelectContent>
                         </MultiSelect>
 
-                        <label htmlFor="profile-bio" className="mt-3 text-blue-500 font-semibold">Bio</label>
+                        <label htmlFor="profile-bio" className="mt-3 text-blue-500 font-bold sm:font-semibold">Bio</label>
                         <div className="rounded-md border px-4 py-2.5 focus-within:border-blue-500">
                             <textarea name="bio" id="profile-bio" rows={9} placeholder="Tell the world a little about how well you know the skills you teach and what interests you about the skills you wish to learn" value={bio} onChange={(e) => setBio(e.target.value.substring(0, bioCharsLimit))} className="w-full outline-none" />
                             <div className={`${getBioCharsLeftColor()} text-xs font-semibold text-right`}>
@@ -173,11 +173,11 @@ function Profile() {
                         </div>
 
                         {profileError && <p className="text-red-500 text-center my-4">{profileError}</p>}
-                        <Button type="submit" disabled={loading} className="w-1/3 sm:w-1/4 mt-2 self-center">Save</Button>
+                        <Button type="submit" disabled={loading} className="w-7/16 sm:w-1/4 mt-2 self-center">Save</Button>
                     </form>
                     <Separator className="mt-14 mb-12" />
-                    <div className="text-xl sm:text-3xl text-center text-blue-500 font-bold mb-4">Contacts</div>
-                    <Intro text="Resume your chat with peers" />
+                    <div className="text-2xl sm:text-3xl text-center text-blue-500 font-bold mb-4">Contacts</div>
+                    <Intro text="Resume your chat with peers" className="text-sm sm:text-inherit text-gray-500" />
                     <div className="p-4 flex flex-col gap-4">
                         {contacts.map(contact => <PeerCard key={contact.id} peer={contact} />)}
                     </div>

@@ -75,10 +75,10 @@ function Chat({ peerId, peerUsername }: ChatProps) {
             <div ref={chatBox} className="h-140 overflow-y-auto rounded-md border p-5 mt-4 space-y-3">
                 {messages.length === 0 ? <p className="text-center text-gray-400"> - No messages yet - </p> : messages.map(message => <ChatMessageTile key={message.id} chatMessage={message} peerId={peerId} peerUsername={peerUsername} />)}
             </div>
-            <form onSubmit={onFormSubmit} className="mt-2 flex gap-2">
+            <form onSubmit={onFormSubmit} className="mt-2 flex gap-2 items-center">
                 <input type="text" name="chat-message" id="chat-message" value={curMessage} onChange={e => setCurMessage(e.target.value)} placeholder="Type a message" className="w-full rounded-md border px-4 py-2 outline-blue-500" />
-                <Button type="submit" disabled={loading} className={`p-2.5 ${loading ? "pl-2.5" : "pl-3.5"}`}>
-                    <img src={loading ? "spinner.svg" : "send.svg"} alt="send" height="25px" width="25px" className="filter brightness-0 invert-100" />
+                <Button type="submit" disabled={loading} className="box-border p-0 px-2.25 pl-2.5 size-9.5 sm:size-11 sm:px-3 sm:pl-3.25 grid place-items-center">
+                    <img src={loading ? "spinner.svg" : "send.svg"} alt="send" height="25px" width="25px" className="size-4.5 sm:size-11 filter brightness-0 invert-100" />
                 </Button>
             </form>
         </section>

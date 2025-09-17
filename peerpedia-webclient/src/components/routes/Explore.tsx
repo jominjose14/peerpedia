@@ -95,7 +95,7 @@ function Explore() {
                 <Main>
                     <Intro text="Peerpedia's search engine" />
                     <form onSubmit={onFormSubmit} className="space-y-4 w-15/16 sm:w-13/16 mx-auto text-[0.9rem]/[1] sm:text-[1.05rem]/[1.25] my-6">
-                        <div className="flex gap-4">
+                        <div className="flex gap-2 sm:gap-4">
                             <input type="text" name="username" id="explore-username" placeholder="Search username" spellCheck="false" value={username} onChange={e => setUsername(e.target.value)} className="w-full rounded-full border px-4 py-2 outline-blue-500" />
                             <Button type="submit" disabled={loading} className="p-2.5">
                                 <img src={loading ? "spinner.svg" : "search.svg"} alt="search" height="25px" width="25px" className="filter brightness-0 invert-100" />
@@ -104,7 +104,7 @@ function Explore() {
                         {searchError && <p className="text-sm text-red-500 text-center">{searchError}</p>}
 
                         <Collapsible className="text-center px-2 sm:px-0">
-                            <CollapsibleTrigger className="text-center cursor-pointer text-blue-500 rounded-sm px-2 pt-1 pb-1.5 hover:bg-blue-50 transition">Filters</CollapsibleTrigger>
+                            <CollapsibleTrigger className="text-center cursor-pointer text-blue-500 rounded-sm px-3 py-2 sm:pt-1 sm:pb-1.5 hover:bg-blue-50 transition">Filters</CollapsibleTrigger>
                             <CollapsibleContent className="text-left space-y-2.5">
                                 <div className="space-y-1.5">
                                     <label className="block text-blue-500 font-semibold">Teach skills</label>

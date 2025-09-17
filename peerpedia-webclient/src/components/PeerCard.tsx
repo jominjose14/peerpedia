@@ -20,7 +20,7 @@ function PeerCard({ peer }: PeerCardProps) {
                     <div className="flex gap-6 items-center justify-center">
                         <div className="flex flex-col items-center gap-2">
                             <LetterImage username={peer.username} variant="large" />
-                            <div className="text-gray-700">@{peer.username}</div>
+                            <div className="text-sm text-gray-700">@{peer.username}</div>
                         </div>
                         <div className="text-sm line-clamp-5">{peer.bio ? peer.bio : "-"}</div>
                     </div>

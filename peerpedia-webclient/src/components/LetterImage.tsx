@@ -5,7 +5,7 @@ interface LetterImageProps {
 
 function LetterImage({ username, variant }: LetterImageProps) {
     const letter = username[0].toUpperCase();
-    const sizeStyles = variant === "small" ? "p-3.5 text-[1rem]/[0.1]" : "p-8 text-[3rem]/[0.1] sm:p-10 sm:text-[3.5rem]/[0.1]";
+    const sizeStyles = variant === "small" ? "p-3.5 text-[1rem]/[0.1]" : "p-7 text-[2.85rem]/[0.1] sm:p-10 sm:text-[3.5rem]/[0.1]";
 
     return (
         <div className={`grid place-items-center font-mono ${sizeStyles} aspect-square rounded-full bg-gradient-to-tr from-blue-400 via-blue-500 to-blue-700 text-white`}>
