@@ -1,14 +1,7 @@
 services:
   - type: web
     name: peerpedia
-    runtime: docker
-    dockerContext: ./peerpedia-load-balancer
-    dockerfilePath: ./peerpedia-load-balancer/Dockerfile
-    plan: free
-    autoDeployTrigger: off
-  
-  - type: web
-    name: webclient
+    region: singapore
     runtime: docker
     dockerContext: ./peerpedia-webclient
     dockerfilePath: ./peerpedia-webclient/Dockerfile
@@ -16,7 +9,8 @@ services:
     autoDeployTrigger: off
   
   - type: web
-    name: app-server-1
+    name: peerpedia-app-server
+    region: singapore
     runtime: docker
     dockerContext: ./peerpedia-server
     dockerfilePath: ./peerpedia-server/Dockerfile
@@ -24,34 +18,6 @@ services:
     autoDeployTrigger: off
     envVars:
       - fromGroup: app-server-env
-      - key: REDIS_URL
-        fromService:
-          name: cache
-          type: keyvalue
-          property: connectionString
-
-  - type: web
-    name: app-server-2
-    runtime: docker
-    dockerContext: ./peerpedia-server
-    dockerfilePath: ./peerpedia-server/Dockerfile
-    plan: free
-    autoDeployTrigger: off
-    envVars:
-      - fromGroup: app-server-env
-      - key: REDIS_URL
-        fromService:
-          name: cache
-          type: keyvalue
-          property: connectionString
-
-  - type: keyvalue
-    name: cache
-    plan: free
-    maxmemoryPolicy: allkeys-lru
-    ipAllowList:
-      - source: 0.0.0.0/0
-        description: everywhere
 
 envVarGroups:
   - name: app-server-env
@@ -61,6 +27,12 @@ envVarGroups:
       - key: DB_USERNAME
         sync: false
       - key: DB_PASSWORD
+        sync: false
+      - key: REDIS_HOST
+        sync: false
+      - key: REDIS_PORT
+        sync: false
+      - key: REDIS_PASSWORD
         sync: false
       - key: CACHE_TYPE
         sync: false
