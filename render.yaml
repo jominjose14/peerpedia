@@ -24,6 +24,21 @@ services:
     autoDeployTrigger: off
     envVars:
       - fromGroup: app-server-env
+      - key: REDIS_HOST
+        fromService:
+          name: cache
+          type: keyvalue
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          name: cache
+          type: keyvalue
+          property: port
+      - key: REDIS_PASSWORD
+        fromService:
+          name: cache
+          type: keyvalue
+          property: password
 
   - type: web
     name: app-server-2
@@ -34,14 +49,21 @@ services:
     autoDeployTrigger: off
     envVars:
       - fromGroup: app-server-env
-
-  - type: web
-    name: cache
-    runtime: docker
-    dockerContext: ./peerpedia-cache
-    dockerfilePath: ./peerpedia-cache/Dockerfile
-    plan: free
-    autoDeployTrigger: off
+      - key: REDIS_HOST
+        fromService:
+          name: cache
+          type: keyvalue
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          name: cache
+          type: keyvalue
+          property: port
+      - key: REDIS_PASSWORD
+        fromService:
+          name: cache
+          type: keyvalue
+          property: password
 
   - type: keyvalue
     name: cache
@@ -60,21 +82,6 @@ envVarGroups:
         sync: false
       - key: DB_PASSWORD
         sync: false
-      - key: REDIS_HOST
-        fromService:
-          name: cache
-          type: keyvalue
-          property: host
-      - key: REDIS_PORT
-        fromService:
-          name: cache
-          type: keyvalue
-          property: port
-      - key: REDIS_PASSWORD
-        fromService:
-          name: cache
-          type: keyvalue
-          property: password
       - key: CACHE_TYPE
         sync: false
       - key: ADMIN_PASSWORD
