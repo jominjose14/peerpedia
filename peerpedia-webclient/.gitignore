@@ -24,4 +24,5 @@ dist-ssr
 *.sw?
 
 # App
-.env
+# include .env so that API_URL is bundled in docker container build on render
+!.env
